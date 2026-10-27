@@ -1,0 +1,47 @@
+gcc -c -I/home/runner/work/tk/tk/tk/unix/../unix -I/home/runner/work/tk/tk/tk/unix/../generic -I/home/runner/work/tk/tk/tk/unix/../bitmaps  -O2  -pipe -finput-charset=UTF-8  -Wall -Wextra -Wshadow -Wundef -Wwrite-strings -Wpointer-arith -Wc++-compat -fextended-identifiers -fPIC -fno-common -DBUILD_tk -I/home/runner/work/tk/tk/tcl/generic -I/home/runner/work/tk/tk/tcl/unix -DPACKAGE_NAME=\"tk\" -DPACKAGE_TARNAME=\"tk\" -DPACKAGE_VERSION=\"9.1\" -DPACKAGE_STRING=\"tk\ 9.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DTCL_CFGVAL_ENCODING=\"utf-8\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_TIME_H=1 -DSTDC_HEADERS=1 -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DHAVE_HIDDEN=1 -DHAVE_CAST_TO_UNION=1 -DHAVE_VFORK=1 -DHAVE_POSIX_SPAWNP=1 -DHAVE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1 -DHAVE_POSIX_SPAWNATTR_SETFLAGS=1 -DTCL_SHLIB_EXT=\".so\" -DNDEBUG=1 -DTCL_CFG_OPTIMIZED=1 -D_LARGEFILE64_SOURCE=1 -DTCL_WIDE_INT_IS_LONG=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DHAVE_PW_GECOS=1 -DHAVE_BIDI=1 -DHAVE_LIBHARFBUZZ=1 -DHAVE_LIBXFT=1 -DHAVE_LIBXRENDER=1 -DHAVE_XRENDER=1 -DZIPFS_BUILD=1       -I/usr/include/freetype2 -I/usr/include/libpng16 -I/home/runner/work/tk/tk/tk/unix/bidi/Headers 		     -I/home/runner/work/tk/tk/tk/unix/bidi/Source 		     -I/home/runner/work/tk/tk/tk/unix/bidi 		     -DSB_CONFIG_UNITY -DSB_CONFIG_EXPERIMENTAL_TEXT_API -w -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/sysprof-6 -pthread    -DTK_TEST /home/runner/work/tk/tk/tk/unix/../unix/tkAppInit.c
+rm -f tkTestInit.o
+mv tkAppInit.o tkTestInit.o
+gcc -c -I/home/runner/work/tk/tk/tk/unix/../unix -I/home/runner/work/tk/tk/tk/unix/../generic -I/home/runner/work/tk/tk/tk/unix/../bitmaps  -O2  -pipe -finput-charset=UTF-8  -Wall -Wextra -Wshadow -Wundef -Wwrite-strings -Wpointer-arith -Wc++-compat -fextended-identifiers -fPIC -fno-common -DBUILD_tk -I/home/runner/work/tk/tk/tcl/generic -I/home/runner/work/tk/tk/tcl/unix -DPACKAGE_NAME=\"tk\" -DPACKAGE_TARNAME=\"tk\" -DPACKAGE_VERSION=\"9.1\" -DPACKAGE_STRING=\"tk\ 9.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DTCL_CFGVAL_ENCODING=\"utf-8\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_TIME_H=1 -DSTDC_HEADERS=1 -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DHAVE_HIDDEN=1 -DHAVE_CAST_TO_UNION=1 -DHAVE_VFORK=1 -DHAVE_POSIX_SPAWNP=1 -DHAVE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1 -DHAVE_POSIX_SPAWNATTR_SETFLAGS=1 -DTCL_SHLIB_EXT=\".so\" -DNDEBUG=1 -DTCL_CFG_OPTIMIZED=1 -D_LARGEFILE64_SOURCE=1 -DTCL_WIDE_INT_IS_LONG=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DHAVE_PW_GECOS=1 -DHAVE_BIDI=1 -DHAVE_LIBHARFBUZZ=1 -DHAVE_LIBXFT=1 -DHAVE_LIBXRENDER=1 -DHAVE_XRENDER=1 -DZIPFS_BUILD=1       -I/usr/include/freetype2 -I/usr/include/libpng16 -I/home/runner/work/tk/tk/tk/unix/bidi/Headers 		     -I/home/runner/work/tk/tk/tk/unix/bidi/Source 		     -I/home/runner/work/tk/tk/tk/unix/bidi 		     -DSB_CONFIG_UNITY -DSB_CONFIG_EXPERIMENTAL_TEXT_API -w -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/sysprof-6 -pthread    /home/runner/work/tk/tk/tk/unix/../generic/tkTest.c
+gcc -c -I/home/runner/work/tk/tk/tk/unix/../unix -I/home/runner/work/tk/tk/tk/unix/../generic -I/home/runner/work/tk/tk/tk/unix/../bitmaps  -O2  -pipe -finput-charset=UTF-8  -Wall -Wextra -Wshadow -Wundef -Wwrite-strings -Wpointer-arith -Wc++-compat -fextended-identifiers -fPIC -fno-common -DBUILD_tk -I/home/runner/work/tk/tk/tcl/generic -I/home/runner/work/tk/tk/tcl/unix -DPACKAGE_NAME=\"tk\" -DPACKAGE_TARNAME=\"tk\" -DPACKAGE_VERSION=\"9.1\" -DPACKAGE_STRING=\"tk\ 9.1\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DTCL_CFGVAL_ENCODING=\"utf-8\" -DHAVE_STDIO_H=1 -DHAVE_STDLIB_H=1 -DHAVE_STRING_H=1 -DHAVE_INTTYPES_H=1 -DHAVE_STDINT_H=1 -DHAVE_STRINGS_H=1 -DHAVE_SYS_STAT_H=1 -DHAVE_SYS_TYPES_H=1 -DHAVE_UNISTD_H=1 -DHAVE_SYS_TIME_H=1 -DSTDC_HEADERS=1 -DMODULE_SCOPE=extern\ __attribute__\(\(__visibility__\(\"hidden\"\)\)\) -DHAVE_HIDDEN=1 -DHAVE_CAST_TO_UNION=1 -DHAVE_VFORK=1 -DHAVE_POSIX_SPAWNP=1 -DHAVE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1 -DHAVE_POSIX_SPAWNATTR_SETFLAGS=1 -DTCL_SHLIB_EXT=\".so\" -DNDEBUG=1 -DTCL_CFG_OPTIMIZED=1 -D_LARGEFILE64_SOURCE=1 -DTCL_WIDE_INT_IS_LONG=1 -DHAVE_INTPTR_T=1 -DHAVE_UINTPTR_T=1 -DHAVE_PW_GECOS=1 -DHAVE_BIDI=1 -DHAVE_LIBHARFBUZZ=1 -DHAVE_LIBXFT=1 -DHAVE_LIBXRENDER=1 -DHAVE_XRENDER=1 -DZIPFS_BUILD=1       -I/usr/include/freetype2 -I/usr/include/libpng16 -I/home/runner/work/tk/tk/tk/unix/bidi/Headers 		     -I/home/runner/work/tk/tk/tk/unix/bidi/Source 		     -I/home/runner/work/tk/tk/tk/unix/bidi 		     -DSB_CONFIG_UNITY -DSB_CONFIG_EXPERIMENTAL_TEXT_API -w -I/usr/include/harfbuzz -I/usr/include/freetype2 -I/usr/include/libpng16 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/sysprof-6 -pthread    /home/runner/work/tk/tk/tk/unix/../generic/tkSquare.c
+make tktest-real LIB_RUNTIME_DIR="`pwd`:/home/runner/work/tk/tk/inst/lib"
+make[1]: Entering directory '/home/runner/work/tk/tk/tk/unix'
+gcc -O2  -pipe -finput-charset=UTF-8  tkTestInit.o tkTest.o tkSquare.o  -L/home/runner/work/tk/tk/tk/unix -ltcl9tk9.1   -Wl,--export-dynamic  -L/home/runner/work/tk/tk/inst/lib -ltcl9.1  -lXft -lfontconfig -lfreetype -lfontconfig -lharfbuzz -lXrender -lX11 -lX11 -ldl -lz  -lrt -lpthread -lm    -lharfbuzz  \
+	libtkstub.a -L/home/runner/work/tk/tk/inst/lib -ltclstub "-Wl,-rpath,/home/runner/work/tk/tk/tk/unix:/home/runner/work/tk/tk/inst/lib" -o tktest
+make[1]: Leaving directory '/home/runner/work/tk/tk/tk/unix'
+LD_LIBRARY_PATH="`pwd`:/home/runner/work/tk/tk/inst/lib:${LD_LIBRARY_PATH}"; export LD_LIBRARY_PATH; TCL_LIBRARY=/home/runner/work/tk/tk/tcl/library; export TCL_LIBRARY; TK_LIBRARY=/home/runner/work/tk/tk/tk/library; export TK_LIBRARY; ./tktest /home/runner/work/tk/tk/tk/unix/../tests/all.tcl -file text.test
+Tests running in interp:  /home/runner/work/tk/tk/tk/unix/tktest
+Tests located in:  /home/runner/work/tk/tk/tk/tests
+Tests running in:  /home/runner/work/tk/tk/tk/unix
+Temporary files stored in /home/runner/work/tk/tk/tk/unix
+Test files sourced into current interpreter
+Running tests that match:  *
+Skipping test files that match:  l.*.test testutils.test winButton.test winClipboard.test winDialog.test winFont.test winMenu.test winMsgbox.test winSend.test winWm.test
+Only running test files that match:  text.test
+Tests began at 2026-10-27 14:19:05 UTC
+text.test
+
+Tests ended at 2026-10-27 14:19:07 UTC
+all.tcl:	Total	703	Passed	696	Skipped	7	Failed	0
+Sourced 1 Test Files.
+Number of tests skipped for each constraint:
+	1	aqua
+	1	aquaOrWin32
+	3	fonts
+	1	knownBug
+	1	win
+LD_LIBRARY_PATH="`pwd`:/home/runner/work/tk/tk/inst/lib:${LD_LIBRARY_PATH}"; export LD_LIBRARY_PATH; TCL_LIBRARY=/home/runner/work/tk/tk/tcl/library; export TCL_LIBRARY; TK_LIBRARY=/home/runner/work/tk/tk/tk/library; export TK_LIBRARY; ./tktest /home/runner/work/tk/tk/tk/unix/../tests/ttk/all.tcl \
+-file text.test
+Tests running in interp:  /home/runner/work/tk/tk/tk/unix/tktest
+Tests located in:  /home/runner/work/tk/tk/tk/tests/ttk
+Tests running in:  /home/runner/work/tk/tk/tk/unix
+Temporary files stored in /home/runner/work/tk/tk/tk/unix
+Test files sourced into current interpreter
+Running tests that match:  *
+Skipping test files that match:  l.*.test vsapi.test
+Only running test files that match:  text.test
+Tests began at 2026-10-27 14:19:08 UTC
+Error:  No test files remain after applying your match and skip patterns!
+
+Tests ended at 2026-10-27 14:19:08 UTC
+all.tcl:	Total	0	Passed	0	Skipped	0	Failed	0
+Sourced 0 Test Files.
