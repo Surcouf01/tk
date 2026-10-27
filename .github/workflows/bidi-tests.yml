@@ -4,6 +4,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -21,6 +24,25 @@ jobs:
             libfontconfig1-dev libfreetype6-dev libharfbuzz-dev \
             libicu-dev xvfb fontconfig fonts-dejavu-core
 
+      - name: Diagnostics (env, ICU)
+        run: |
+          {
+            cat /etc/os-release | head -2
+            uname -a
+            ls /usr/lib/x86_64-linux-gnu/ | grep -i '^libicu' || true
+            pkg-config --modversion icu-uc icu-i18n || true
+          } | tee /tmp/diag.log
+
+      - name: ICU workaround (symlink to a version Tk tries)
+        run: |
+          ACTUAL=$(ls /usr/lib/x86_64-linux-gnu/libicuuc.so.* 2>/dev/null | grep -v '\.a$' | head -1)
+          if [ -n "$ACTUAL" ]; then
+            if ! ls /usr/lib/x86_64-linux-gnu/libicuuc.so.[67]? >/dev/null 2>&1; then
+              sudo ln -sf "$ACTUAL" /usr/lib/x86_64-linux-gnu/libicuuc.so.79
+              echo "Symlinked $ACTUAL -> libicuuc.so.79"
+            fi
+          fi
+
       - name: Build Tcl 9 (trunk)
         run: |
           set -o pipefail
@@ -36,28 +58,28 @@ jobs:
           cd tk/unix
           ./configure --with-tcl=$GITHUB_WORKSPACE/inst/lib \
                       --prefix=$GITHUB_WORKSPACE/inst --enable-bidi
-          make -j$(nproc) 2>&1 | tee /tmp/build.log | tail -40
+          make -j$(nproc) 2>&1 | tee /tmp/tkbuild.log | tail -20
 
       - name: ICU availability check
         run: |
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
-          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/icu-check.tcl
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/icu-check.tcl 2>&1 | tee /tmp/icu.log
 
       - name: "Test 1: RTL layout stability under sel tag (bug: dancing selection)"
         run: |
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
-          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/rtl-tag-stability.tcl
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/rtl-tag-stability.tcl 2>&1 | tee /tmp/test1.log
 
       - name: "Test 2: cluster boundary snapping (pointed Hebrew)"
         run: |
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
-          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/cluster-gap.tcl
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/cluster-gap.tcl 2>&1 | tee /tmp/test2.log
 
       - name: "text.test suite (informational)"
         continue-on-error: true
@@ -65,4 +87,17 @@ jobs:
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
-          xvfb-run -a -s "-screen 0 1280x1024x24" make test TESTFLAGS="-file text.test" 2>&1 | tail -30
+          xvfb-run -a -s "-screen 0 1280x1024x24" make test TESTFLAGS="-file text.test" 2>&1 | tee /tmp/texttest.log | tail -20
+
+      - name: Publish results
+        if: always()
+        run: |
+          cd tk
+          git config user.name ci-bot
+          git config user.email ci-bot@users.noreply.github.com
+          mkdir -p .ci-logs
+          cp /tmp/diag.log /tmp/icu.log /tmp/test1.log /tmp/test2.log /tmp/texttest.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
+          cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
+          git add .ci-logs
+          git commit -qm "CI logs ${{ github.ref_name }} ${{ github.sha }}"
+          git push -qf origin HEAD:refs/heads/ci-results/${{ github.ref_name }}

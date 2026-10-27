@@ -8,6 +8,7 @@ if {[catch {package require Tk} err]} {
 }
 if {[llength [info commands ::tk::startOfCluster]] == 0} {
     puts "SKIP: libicu not found, tk::startOfCluster unavailable"
+    puts "tk commands: [lsort [info commands ::tk::*]]"
     exit 0
 }
 pack [text .t -font {{DejaVu Sans} 14}]
