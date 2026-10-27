@@ -16,12 +16,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-            gcc make pkg-config libx11-dev libxext-dev libxft-dev \
-            libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev \
+            gcc make pkg-config git ca-certificates \
+            libx11-dev libxext-dev libxft-dev libxrender-dev \
+            libfontconfig1-dev libfreetype6-dev libharfbuzz-dev \
             libicu-dev xvfb fontconfig fonts-dejavu-core
 
       - name: Build Tcl 9 (trunk)
         run: |
+          set -o pipefail
           git clone --depth 1 https://github.com/tcltk/tcl.git tcl
           cd tcl/unix
           ./configure --prefix=$GITHUB_WORKSPACE/inst
@@ -30,10 +32,11 @@ jobs:
 
       - name: Build Tk (trunk, bidi)
         run: |
+          set -o pipefail
           cd tk/unix
           ./configure --with-tcl=$GITHUB_WORKSPACE/inst/lib \
                       --prefix=$GITHUB_WORKSPACE/inst --enable-bidi
-          make -j$(nproc) 2>&1 | tail -5
+          make -j$(nproc) 2>&1 | tee /tmp/build.log | tail -40
 
       - name: ICU availability check
         run: |
