@@ -9562,16 +9562,42 @@ CharBboxProc(
     if (ciPtr->isRtl) {
 	/* RTL: mirror the measurement. */
 	int xEnd, xStart;
+	int anchorX = chunkPtr->x;
+	int mirrorX = chunkPtr->x;
+	int mirrorW = chunkPtr->width;
+
+	/*
+	 * With base chunks, the measurement of a chunk is anchored at the
+	 * base chunk (see CharChunkMeasureChars: startX only displaces the
+	 * span, the advance is always computed from the start of the base
+	 * chars), so xEnd and xStart are cumulative from the base chunk.
+	 * When the base chunk itself is RTL, BidiReorderChunks has placed
+	 * it at the right edge of the line's RTL run: the cumulative
+	 * measurement must then be mirrored around the right edge of that
+	 * run, which is the right edge of the base chunk.
+	 */
+
+	if (ciPtr->baseChunkPtr != NULL
+		&& ciPtr->baseChunkPtr->clientData != NULL) {
+	    BaseCharInfo *baseCiPtr = (BaseCharInfo *)
+		    ciPtr->baseChunkPtr->clientData;
+
+	    anchorX = ciPtr->baseChunkPtr->x;
+	    if (baseCiPtr->ci.isRtl) {
+		mirrorX = anchorX;
+		mirrorW = ciPtr->baseChunkPtr->width;
+	    }
+	}
 	CharChunkMeasureChars(chunkPtr, NULL, 0, 0, nextIndex,
 		chunkPtr->x, -1, 0, &xEnd);
 	CharChunkMeasureChars(chunkPtr, NULL, 0, 0, byteIndex,
 		chunkPtr->x, -1, 0, &xStart);
 
-	*xPtr = chunkPtr->x + (chunkPtr->width - (xEnd - chunkPtr->x));
+	*xPtr = mirrorX + mirrorW - (xEnd - anchorX);
 	if (getenv("TK_DEBUG_BIDI") != NULL) {
-		fprintf(stderr, "CBP: chunk.x=%d w=%d bidx=%d xEnd=%d xStart=%d -> x=%d baseX=%d\n",
+		fprintf(stderr, "CBP: chunk.x=%d w=%d bidx=%d xEnd=%d xStart=%d -> x=%d anchorX=%d mirrorX=%d mirrorW=%d\n",
 			chunkPtr->x, chunkPtr->width, (int)byteIndex, xEnd, xStart, *xPtr,
-			ciPtr->baseChunkPtr ? ciPtr->baseChunkPtr->x : -1);
+			anchorX, mirrorX, mirrorW);
 	}
 	*widthPtr = xEnd - xStart;
 
