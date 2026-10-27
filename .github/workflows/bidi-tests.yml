@@ -1,0 +1,65 @@
+name: Bidi selection tests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: tk
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gcc make pkg-config libx11-dev libxext-dev libxft-dev \
+            libxrender-dev libxkbcommon-dev libxkbcommon-x11-dev \
+            libicu-dev xvfb fontconfig fonts-dejavu-core
+
+      - name: Build Tcl 9 (trunk)
+        run: |
+          git clone --depth 1 https://github.com/tcltk/tcl.git tcl
+          cd tcl/unix
+          ./configure --prefix=$GITHUB_WORKSPACE/inst
+          make -j$(nproc)
+          make install
+
+      - name: Build Tk (trunk, bidi)
+        run: |
+          cd tk/unix
+          ./configure --with-tcl=$GITHUB_WORKSPACE/inst/lib \
+                      --prefix=$GITHUB_WORKSPACE/inst --enable-bidi
+          make -j$(nproc) 2>&1 | tail -5
+
+      - name: ICU availability check
+        run: |
+          cd tk/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/icu-check.tcl
+
+      - name: "Test 1: RTL layout stability under sel tag (bug: dancing selection)"
+        run: |
+          cd tk/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/rtl-tag-stability.tcl
+
+      - name: "Test 2: cluster boundary snapping (pointed Hebrew)"
+        run: |
+          cd tk/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/cluster-gap.tcl
+
+      - name: "text.test suite (informational)"
+        continue-on-error: true
+        run: |
+          cd tk/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" make test TESTFLAGS="-file text.test" 2>&1 | tail -30
