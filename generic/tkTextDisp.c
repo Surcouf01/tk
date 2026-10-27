@@ -2167,6 +2167,8 @@ LayoutDLine(
      * Recompute line length: may have changed because of justification.
      */
 
+    dlPtr->length = lastChunkPtr->x + lastChunkPtr->width;
+
     /*
      * Reorder the chunks of the line according to the bidi levels, so
      * that tag-split RTL chunks are placed in visual order (see
@@ -8416,7 +8418,24 @@ TkTextDLineInfo(
 	return false;
     }
 
-    dlx = (dlPtr->chunkPtr != NULL? dlPtr->chunkPtr->x: 0);
+    /*
+     * The left edge of the line is the leftmost chunk: BidiReorderChunks
+     * may have put the first chunk of the list on the right side of an
+     * RTL line, so scanning the chunks for the minimum x is required.
+     */
+
+    dlx = 0;
+    if (dlPtr->chunkPtr != NULL) {
+	TkTextDispChunk *chunkPtr;
+
+	dlx = dlPtr->chunkPtr->x;
+	for (chunkPtr = dlPtr->chunkPtr->nextPtr; chunkPtr != NULL;
+		chunkPtr = chunkPtr->nextPtr) {
+	    if (chunkPtr->x < dlx) {
+		dlx = chunkPtr->x;
+	    }
+	}
+    }
     *xPtr = dInfoPtr->x - dInfoPtr->curXPixelOffset + dlx;
     *widthPtr = dlPtr->length - dlx;
     *yPtr = dlPtr->y;
