@@ -72,7 +72,6 @@ jobs:
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
-          export TK_DEBUG_BIDI=1
           xvfb-run -a -s "-screen 0 1280x1024x24" ./wish $GITHUB_WORKSPACE/tk/.github/test-scripts/rtl-tag-stability.tcl 2>&1 | tee /tmp/test1.log
 
       - name: "Test 2: cluster boundary snapping (pointed Hebrew)"

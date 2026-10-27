@@ -1483,22 +1483,6 @@ BidiReorderChunks(
 	i = gEnd + 1;
     }
 
-    if (getenv("TK_DEBUG_BIDI") != NULL) {
-	fprintf(stderr, "BRC after: nChunks=%d\n", nChunks);
-	for (i = 0; i < nChunks; i++) {
-	    CharInfo *ci = (CharInfo *)chunks[i]->clientData;
-	    fprintf(stderr, "  chunk[%d] x=%d w=%d nBytes=%d isRtl=%d baseOff=%d baseX=%d chars=%.*s\n",
-			    i, chunks[i]->x, chunks[i]->width, (int)chunks[i]->numBytes,
-			    ci ? ci->isRtl : -1,
-			    ci ? (int)ci->baseOffset : -1,
-			    (ci && ci->baseChunkPtr) ? ci->baseChunkPtr->x : -1,
-			    (ci && ci->chars) ? ((ci->numBytes > 12) ? 12 : (int)ci->numBytes) : 0,
-			    (ci && ci->chars) ? ci->chars : "");
-	}
-	fprintf(stderr, "BRC dir: ");
-	for (i = 0; i < nChunks; i++) fprintf(stderr, "%d,", dir[i]);
-	fprintf(stderr, "\n");
-    }
     Tcl_Free(chunks);
     Tcl_Free(dir);
 }
@@ -9613,11 +9597,6 @@ CharBboxProc(
 		chunkPtr->x, -1, 0, &xStart);
 
 	*xPtr = mirrorX + mirrorW - (xEnd - anchorX);
-	if (getenv("TK_DEBUG_BIDI") != NULL) {
-		fprintf(stderr, "CBP: chunk.x=%d w=%d bidx=%d xEnd=%d xStart=%d -> x=%d anchorX=%d mirrorX=%d mirrorW=%d\n",
-			chunkPtr->x, chunkPtr->width, (int)byteIndex, xEnd, xStart, *xPtr,
-			anchorX, mirrorX, mirrorW);
-	}
 	*widthPtr = xEnd - xStart;
 
 	if (*xPtr < chunkPtr->x) *xPtr = chunkPtr->x;
