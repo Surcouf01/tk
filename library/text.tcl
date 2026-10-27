@@ -508,20 +508,20 @@ proc ::tk::TextClosestGap {w x y} {
     if {$y < [lindex [$w dlineinfo $pos] 1] || [$w get $pos] eq "\n"} {
 	return $pos
     }
-    # Keep the boundary out of grapheme clusters (a base character plus
-    # its combining marks, e.g. the nikkud and teamim of pointed Hebrew):
-    # a cluster occupies a single position on screen although it spans
-    # several indices, and a boundary landing strictly inside it makes
-    # the mouse selection oscillate between those indices while dragging
-    # (the "dancing selection" bug).  Snap the boundary to the edge of
-    # the cluster, using the ICU-based tk::startOfCluster /
-    # tk::endOfCluster commands (UAX #29).  This is only possible when
-    # libicu was found at start-up; without it the behavior is unchanged.
+    # Keep the selection boundary out of grapheme clusters (a base
+    # character plus its combining marks, e.g. the nikkud and teamim of
+    # pointed Hebrew): a cluster occupies a single position on screen
+    # although it spans several indices, and a boundary landing inside it
+    # makes the mouse selection oscillate between those indices while
+    # dragging (the "dancing selection" bug).  Snap the boundary to the
+    # edge of the cluster, using the ICU-based tk::startOfCluster /
+    # tk::endOfCluster commands (UAX #29).  Only possible when libicu
+    # was found at start-up; without it the behavior is unchanged.
     if {[llength [info commands ::tk::startOfCluster]]} {
 	# $cend is the first cluster boundary after $pos, so the cluster
 	# [$cstart, $cend) is the one containing $pos.  When $pos is itself
 	# a cluster boundary, $cstart == $pos and we fall through to the
-	# historical behavior.
+	# historical half-width behavior below.
 	set cend [TextNextPos $w $pos tk::endOfCluster]
 	if {[$w compare $cend != $pos]} {
 		set cstart [TextPrevPos $w $cend tk::startOfCluster]
@@ -538,6 +538,13 @@ proc ::tk::TextClosestGap {w x y} {
 			}
 			return $cend
 		}
+		# $pos is the start of a multi-character cluster: the gap after
+		# this cluster is $cend, NOT "$pos + 1 char" which would land
+		# inside the cluster (on a combining mark).
+		if {$x - [lindex $bbox 0] >= [lindex $bbox 2]/2} {
+			return $cend
+		}
+		return $pos
 	}
     }
     if {$x - [lindex $bbox 0] < [lindex $bbox 2]/2} {
