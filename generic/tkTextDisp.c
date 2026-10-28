@@ -9099,7 +9099,7 @@ CharChunkMeasureChars(
 
 	    if (!buildBannerShown) {
 		buildBannerShown = 1;
-		fprintf(stderr, "TK_DEBUG_BIDI build: win-debug-bidi r5 (clamp v2 + banner)\n");
+		fprintf(stderr, "TK_DEBUG_BIDI build: win-debug-bidi r6 (bbox: no chunk-x clamp)\n");
 	    }
 	    fprintf(stderr, "CCM: ext=%d bstart=%d bend=%d startX=%d baseX=%d xDisp=%d fit=%d nextX=%d maxX=%d charsLen=%d\n",
 		    chars != NULL, (int)bstart, (int)bend, startX,
@@ -9665,8 +9665,22 @@ CharBboxProc(
 	}
 	*widthPtr = xEnd - xStart;
 
-	if (*xPtr < chunkPtr->x) *xPtr = chunkPtr->x;
-	if (*xPtr + *widthPtr > maxX) *widthPtr = maxX - *xPtr;
+	/*
+	 * Do NOT clamp *xPtr to the chunk box here: with base chunks the
+	 * mirrored position is expressed in the line's coordinate space
+	 * and legitimately falls outside the chunk that merely carries
+	 * the character's style (e.g. a selection-tag chunk placed at the
+	 * right edge of an RTL line while its characters render further
+	 * left). Clamping x to the chunk box broke before/after-selection
+	 * position consistency ("dancing selection"). Only guard against
+	 * nonsensical widths.
+	 */
+
+	if (*widthPtr < 0) {
+	    *widthPtr = 0;
+	} else if (*xPtr < maxX && *xPtr + *widthPtr > maxX) {
+	    *widthPtr = maxX - *xPtr;
+	}
     } else
 #endif /* TK_LAYOUT_WITH_BASE_CHUNKS */
     {
