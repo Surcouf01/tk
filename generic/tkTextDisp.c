@@ -9110,12 +9110,12 @@ CharChunkMeasureChars(
 	 * Clamp to the span start so such characters get zero width.
 	 */
 
-	if (*nextXPtr < mStartX) {
+	if (*nextXPtr < startX) {
 	    if (getenv("TK_DEBUG_BIDI") != NULL) {
-		fprintf(stderr, "CCM-CLAMP: bend=%d nextX %d -> %d\n",
-			(int)bend, *nextXPtr, mStartX);
+		fprintf(stderr, "CCM-CLAMP: bstart=%d bend=%d nextX %d -> %d (startX)\n",
+			(int)bstart, (int)bend, *nextXPtr, startX);
 	    }
-	    *nextXPtr = mStartX;
+	    *nextXPtr = startX;
 	}
 
 	if (fit < bstart) {
