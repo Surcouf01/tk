@@ -1,0 +1,1 @@
+FAIL: gap at px=23 returned index 1.24 whose char is U+05B4 (inside a cluster)
