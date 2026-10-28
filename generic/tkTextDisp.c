@@ -9063,6 +9063,19 @@ CharChunkMeasureChars(
 	fit = MeasureChars(tkfont, chars, charsLen, 0, bend,
 			   ciPtr->baseChunkPtr->x + xDisplacement, maxX, flags, nextXPtr);
 
+	/*
+	 * The Windows backend (Uniscribe) can return a non-monotonic
+	 * position when the measured range ends with a control character
+	 * such as '\n': the returned right edge may be to the left of the
+	 * span start, producing chunks with negative width (e.g. the
+	 * newline chunk), which corrupts DLine length and justification.
+	 * Clamp to the span start so such characters get zero width.
+	 */
+
+	if (*nextXPtr < startX) {
+	    *nextXPtr = startX;
+	}
+
 	if (fit < bstart) {
 	    return 0;
 	} else {
@@ -9599,8 +9612,22 @@ CharBboxProc(
 	*xPtr = mirrorX + mirrorW - (xEnd - anchorX);
 	*widthPtr = xEnd - xStart;
 
-	if (*xPtr < chunkPtr->x) *xPtr = chunkPtr->x;
-	if (*xPtr + *widthPtr > maxX) *widthPtr = maxX - *xPtr;
+	/*
+	 * Do NOT clamp *xPtr to the chunk box: with base chunks the
+	 * mirrored position is expressed in the line's coordinate space
+	 * and legitimately falls outside the chunk that merely carries
+	 * the character's style (e.g. a selection-tag chunk placed at
+	 * the right edge of an RTL line while its characters render
+	 * further left). Clamping x to the chunk box broke
+	 * before/after-selection position consistency ("dancing
+	 * selection"). Only guard against nonsensical widths.
+	 */
+
+	if (*widthPtr < 0) {
+	    *widthPtr = 0;
+	} else if (*xPtr < maxX && *xPtr + *widthPtr > maxX) {
+	    *widthPtr = maxX - *xPtr;
+	}
     } else
 #endif /* TK_LAYOUT_WITH_BASE_CHUNKS */
     {
