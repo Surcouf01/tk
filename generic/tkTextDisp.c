@@ -9095,6 +9095,12 @@ CharChunkMeasureChars(
 	fit = MeasureChars(tkfont, chars, charsLen, 0, bend,
 			   mStartX, maxX, flags, nextXPtr);
 	if (getenv("TK_DEBUG_BIDI") != NULL) {
+	    static int buildBannerShown = 0;
+
+	    if (!buildBannerShown) {
+		buildBannerShown = 1;
+		fprintf(stderr, "TK_DEBUG_BIDI build: win-debug-bidi r5 (clamp v2 + banner)\n");
+	    }
 	    fprintf(stderr, "CCM: ext=%d bstart=%d bend=%d startX=%d baseX=%d xDisp=%d fit=%d nextX=%d maxX=%d charsLen=%d\n",
 		    chars != NULL, (int)bstart, (int)bend, startX,
 		    (ciPtr->baseChunkPtr ? ciPtr->baseChunkPtr->x : -1),
@@ -10544,3 +10550,4 @@ RemoveFromBaseChunk(
  * fill-column: 78
  * End:
  */
+
