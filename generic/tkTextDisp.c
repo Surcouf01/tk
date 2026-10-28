@@ -1940,6 +1940,10 @@ LayoutDLine(
 	}
 	lastChunkPtr = chunkPtr;
 	x += chunkPtr->width;
+	if (getenv("TK_DEBUG_BIDI") != NULL) {
+	    fprintf(stderr, "LDL: chunk x=%d w=%d nBytes=%d xAcc=%d maxX=%d\n",
+		    chunkPtr->x, chunkPtr->width, (int)chunkPtr->numBytes, x, maxX);
+	}
 	if (chunkPtr->breakIndex > 0) {
 	    breakByteOffset = chunkPtr->breakIndex;
 	    breakIndex = curIndex;
@@ -8690,6 +8694,10 @@ TkTextCharLayoutProc(
     bytesThatFit = CharChunkMeasureChars(chunkPtr, line,
 	    lineOffset + maxBytes, lineOffset, -1, chunkPtr->x, maxX,
 	    TK_ISOLATE_END, &nextX);
+    if (getenv("TK_DEBUG_BIDI") != NULL) {
+	fprintf(stderr, "CLP: x=%d maxBytes=%d bFit=%d nextX=%d maxX=%d\n",
+		chunkPtr->x, (int)maxBytes, (int)bytesThatFit, nextX, maxX);
+    }
 #else /* !TK_LAYOUT_WITH_BASE_CHUNKS */
     bytesThatFit = CharChunkMeasureChars(chunkPtr, p, maxBytes, 0, -1,
 	    chunkPtr->x, maxX, TK_ISOLATE_END, &nextX);
@@ -9078,6 +9086,12 @@ CharChunkMeasureChars(
 
 	fit = MeasureChars(tkfont, chars, charsLen, 0, bend,
 			   ciPtr->baseChunkPtr->x + xDisplacement, maxX, flags, nextXPtr);
+	if (getenv("TK_DEBUG_BIDI") != NULL) {
+	    fprintf(stderr, "CCM: ext=%d bstart=%d bend=%d startX=%d baseX=%d xDisp=%d fit=%d nextX=%d maxX=%d charsLen=%d\n",
+		    chars != NULL, (int)bstart, (int)bend, startX,
+		    (ciPtr->baseChunkPtr ? ciPtr->baseChunkPtr->x : -1),
+		    xDisplacement, (int)fit, *nextXPtr, maxX, (int)charsLen);
+	}
 
 	if (fit < bstart) {
 	    return 0;
