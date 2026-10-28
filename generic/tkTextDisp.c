@@ -9062,6 +9062,7 @@ CharChunkMeasureChars(
 #else /* TK_LAYOUT_WITH_BASE_CHUNKS */
     {
 	int xDisplacement;
+	int mStartX;
 	int fit, bstart = start, bend = end;
 
 	if (chars == NULL) {
@@ -9090,13 +9091,31 @@ CharChunkMeasureChars(
 	    xDisplacement = startX - widthUntilStart - ciPtr->baseChunkPtr->x;
 	}
 
+	mStartX = ciPtr->baseChunkPtr->x + xDisplacement;
 	fit = MeasureChars(tkfont, chars, charsLen, 0, bend,
-			   ciPtr->baseChunkPtr->x + xDisplacement, maxX, flags, nextXPtr);
+			   mStartX, maxX, flags, nextXPtr);
 	if (getenv("TK_DEBUG_BIDI") != NULL) {
 	    fprintf(stderr, "CCM: ext=%d bstart=%d bend=%d startX=%d baseX=%d xDisp=%d fit=%d nextX=%d maxX=%d charsLen=%d\n",
 		    chars != NULL, (int)bstart, (int)bend, startX,
 		    (ciPtr->baseChunkPtr ? ciPtr->baseChunkPtr->x : -1),
 		    xDisplacement, (int)fit, *nextXPtr, maxX, (int)charsLen);
+	}
+
+	/*
+	 * The Windows backend (Uniscribe) can return a non-monotonic
+	 * position when the measured range ends with a control character
+	 * such as '\n': the returned right edge may be to the left of the
+	 * span start, producing chunks with negative width (e.g. the
+	 * newline chunk), which corrupts DLine length and justification.
+	 * Clamp to the span start so such characters get zero width.
+	 */
+
+	if (*nextXPtr < mStartX) {
+	    if (getenv("TK_DEBUG_BIDI") != NULL) {
+		fprintf(stderr, "CCM-CLAMP: bend=%d nextX %d -> %d\n",
+			(int)bend, *nextXPtr, mStartX);
+	    }
+	    *nextXPtr = mStartX;
 	}
 
 	if (fit < bstart) {
