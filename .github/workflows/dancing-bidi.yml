@@ -135,4 +135,4 @@ jobs:
           cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
           git add .ci-logs
           git commit -qm "CI logs dancing_bidi ${{ github.sha }}"
-          git push -qf origin HEAD:refs/heads/ci-results/ci-fossil-dancing-bidi
+          git push -qf origin HEAD:refs/heads/ci-results/dancing-bidi-fossil

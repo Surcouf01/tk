@@ -1,10 +1,9 @@
 --- td-dancing.c	2026-10-30 03:56:07.505163729 +0000
-+++ td-dbg.c	2026-10-30 03:57:50.303135050 +0000
-@@ -19,6 +19,23 @@
++++ td-dbg.c	2026-10-30 04:03:31.222039909 +0000
+@@ -25,6 +25,22 @@
+ #include "tkUnixInt.h"
+ #endif
  
- #ifdef _WIN32
- #include "tkWinInt.h"
-+
 +/* ---- TK_DEBUG_MEASURE diagnostic probes ---- */
 +#include <stdlib.h>
 +static int DbgMOn = -1;
@@ -21,10 +20,10 @@
 +}
 +/* ---- end probes ---- */
 +
- #elif defined(MAC_OSX_TK)
- #include "tkMacOSXInt.h"
- #else
-@@ -9541,10 +9558,17 @@
+ /*
+  * "Calculations of line pixel heights and the size of the vertical
+  * scrollbar."
+@@ -9541,10 +9557,17 @@
  	    MeasureChars(tkfont, chars, charsLen, 0, bstart,
  			 0, -1, 0, &widthUntilStart);
  	    xDisplacement = startX - widthUntilStart - BaseOriginX(ciPtr);
@@ -42,7 +41,7 @@
  
  	/*
  	 * The Windows backend (Uniscribe) can return a non-monotonic
-@@ -9589,6 +9613,11 @@
+@@ -9589,6 +9612,11 @@
  		bciTmp->maxPrefixWidth = *nextXPtr;
  	    }
  	}
@@ -54,7 +53,7 @@
  
  	if (fit < bstart) {
  	    return 0;
-@@ -9678,10 +9707,17 @@
+@@ -9678,10 +9706,17 @@
  	    MeasureChars(tkfont, chars, charsLen, 0, bstart,
  			 0, -1, 0, &widthUntilStart);
  	    xDisplacement = startX - widthUntilStart - BaseOriginX(ciPtr);
@@ -72,7 +71,7 @@
  
  	/*
  	 * The Windows backend (Uniscribe) can return a non-monotonic
-@@ -9726,6 +9762,11 @@
+@@ -9726,6 +9761,11 @@
  		bciTmp->maxPrefixWidth = *nextXPtr;
  	    }
  	}
@@ -84,7 +83,7 @@
  
  	if (fit < bstart) {
  	    return 0;
-@@ -10189,12 +10230,17 @@
+@@ -10189,12 +10229,17 @@
  	    CharChunkMeasureChars(chunkPtr, NULL, 0, byteIndex, nextIndex,
  		    *xPtr, -1, 0, &x2);
  	    *widthPtr = (x2 > maxX) ? maxX - *xPtr : x2 - *xPtr;
@@ -103,7 +102,7 @@
      }
  }
  
-@@ -10623,6 +10669,7 @@
+@@ -10623,6 +10668,7 @@
      ch = 0;
      curX = startX;
      start = source + rangeStart;
@@ -111,7 +110,7 @@
      end = start + rangeLength;
      special = start;
      while (start < end) {
-@@ -10672,6 +10719,8 @@
+@@ -10672,6 +10718,8 @@
  	}
      }
  
