@@ -60,11 +60,12 @@ jobs:
           ls dancing_bidi | head -20 | tee /tmp/fetch.log
           cat dancing_bidi/manifest.uuid >> /tmp/fetch.log 2>/dev/null || true
 
-      - name: Apply TK_DEBUG_MEASURE instrumentation
+      - name: Apply TK_DEBUG_MEASURE instrumentation + mixed-bidi fix
         run: |
           cd dancing_bidi
           patch -p0 generic/tkTextDisp.c < $GITHUB_WORKSPACE/repo/.github/patches/dancing-diag.patch
-          echo "instrumentation applied" >> /tmp/fetch.log
+          patch -p0 generic/tkTextDisp.c < $GITHUB_WORKSPACE/repo/.github/patches/dancing-mixed-fix.patch
+          echo "instrumentation + fix applied" >> /tmp/fetch.log
 
       - name: Build Tk (dancing_bidi, bidi)
         run: |
