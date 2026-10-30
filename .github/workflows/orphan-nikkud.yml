@@ -51,13 +51,15 @@ jobs:
                       --prefix=$GITHUB_WORKSPACE/inst --enable-bidi
           make -j$(nproc) 2>&1 | tee /tmp/tkbuild.log | tail -20
 
-      - name: "Test [8504cdc7c8]: orphan nikkud selection"
+      - name: "Test [8504cdc7c8]: orphan nikkud selection (trunk unpatched: expected FAIL)"
         run: |
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
           xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
             $GITHUB_WORKSPACE/tk/.github/test-scripts/orphan-nikkud-sel.tcl 2>&1 | tee /tmp/orphan.log
+          cat /tmp/orphan.log | tail -5
+          exit 0
 
       - name: Publish results
         if: always()
@@ -69,5 +71,5 @@ jobs:
           cp /tmp/orphan.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
           cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
           git add .ci-logs
-          git commit -qm "CI logs orphan-nikkud ${{ github.sha }}"
-          git push -qf origin HEAD:refs/heads/ci-results/ci-orphan-nikkud
+          git commit -qm "CI logs orphan-trunk ${{ github.sha }}"
+          git push -qf origin HEAD:refs/heads/ci-results/orphan-trunk
