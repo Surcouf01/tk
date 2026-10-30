@@ -1,0 +1,82 @@
+name: canvas item leak demonstrator ([f476bada5b445d6b465a] / dup [92d0a16102])
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gcc make git ca-certificates \
+            libx11-dev libxext-dev libxft-dev libxrender-dev \
+            libfontconfig1-dev libfreetype6-dev xvfb fontconfig fonts-dejavu-core
+
+      - name: Build Tcl core-9-0-4
+        run: |
+          set -o pipefail
+          git clone --depth 1 --branch core-9-0-4 https://github.com/tcltk/tcl.git tcl
+          cd tcl/unix
+          ./configure --prefix=$GITHUB_WORKSPACE/inst904
+          make -j$(nproc) >/dev/null
+          make install
+
+      - name: Build Tk core-9-0-4 (vulnerable) and run demonstrator
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          git clone --depth 1 --branch core-9-0-4 https://github.com/tcltk/tk.git tk904
+          cd tk904/unix
+          ./configure --with-tcl=$GITHUB_WORKSPACE/inst904/lib \
+                      --prefix=$GITHUB_WORKSPACE/inst904
+          make -j$(nproc) 2>&1 | tail -3
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tk904/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst904/lib:$GITHUB_WORKSPACE/tk904/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
+            $GITHUB_WORKSPACE/repo/.github/test-scripts/canvas-item-leak.tcl 2>&1 | tee /tmp/leak-904.log || true
+
+      - name: Build Tcl trunk
+        run: |
+          set -o pipefail
+          git clone --depth 1 https://github.com/tcltk/tcl.git tcltrunk
+          cd tcltrunk/unix
+          ./configure --prefix=$GITHUB_WORKSPACE/insttrunk
+          make -j$(nproc) >/dev/null
+          make install
+
+      - name: Build Tk trunk (fixed) and run demonstrator
+        run: |
+          set -o pipefail
+          git clone --depth 1 https://github.com/tcltk/tk.git tktrunk
+          cd tktrunk/unix
+          ./configure --with-tcl=$GITHUB_WORKSPACE/insttrunk/lib \
+                      --prefix=$GITHUB_WORKSPACE/insttrunk
+          make -j$(nproc) 2>&1 | tail -3
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tktrunk/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/insttrunk/lib:$GITHUB_WORKSPACE/tktrunk/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
+            $GITHUB_WORKSPACE/repo/.github/test-scripts/canvas-item-leak.tcl 2>&1 | tee /tmp/leak-trunk.log
+
+      - name: Publish results
+        if: always()
+        run: |
+          cd repo
+          git config user.name ci-bot
+          git config user.email ci-bot@users.noreply.github.com
+          mkdir -p .ci-logs
+          cp /tmp/leak-904.log /tmp/leak-trunk.log .ci-logs/ 2>/dev/null || true
+          cp .github/test-scripts/canvas-item-leak.tcl .ci-logs/ 2>/dev/null || true
+          git add .ci-logs
+          git commit -qm "CI logs canvas leak demo ${{ github.sha }}"
+          git push -qf origin HEAD:refs/heads/ci-results/ci-canvas-leak
