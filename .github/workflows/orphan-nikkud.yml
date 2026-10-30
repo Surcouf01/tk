@@ -1,0 +1,73 @@
+name: Orphan nikkud selection test
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: tk
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            gcc make pkg-config git ca-certificates curl \
+            libx11-dev libxext-dev libxft-dev libxrender-dev \
+            libfontconfig1-dev libfreetype6-dev libharfbuzz-dev \
+            libicu-dev xvfb fontconfig fonts-dejavu-core
+
+      - name: ICU workaround (symlink to a version Tk tries)
+        run: |
+          ACTUAL=$(ls /usr/lib/x86_64-linux-gnu/libicuuc.so.* 2>/dev/null | grep -v '\.a$' | head -1)
+          if [ -n "$ACTUAL" ]; then
+            if ! ls /usr/lib/x86_64-linux-gnu/libicuuc.so.[67]? >/dev/null 2>&1; then
+              sudo ln -sf "$ACTUAL" /usr/lib/x86_64-linux-gnu/libicuuc.so.79
+              echo "Symlinked $ACTUAL -> libicuuc.so.79"
+            fi
+          fi
+
+      - name: Build Tcl 9 (trunk)
+        run: |
+          set -o pipefail
+          git clone --depth 1 https://github.com/tcltk/tcl.git tcl
+          cd tcl/unix
+          ./configure --prefix=$GITHUB_WORKSPACE/inst
+          make -j$(nproc)
+          make install
+
+      - name: Build Tk (trunk, bidi)
+        run: |
+          set -o pipefail
+          cd tk/unix
+          ./configure --with-tcl=$GITHUB_WORKSPACE/inst/lib \
+                      --prefix=$GITHUB_WORKSPACE/inst --enable-bidi
+          make -j$(nproc) 2>&1 | tee /tmp/tkbuild.log | tail -20
+
+      - name: "Test [8504cdc7c8]: orphan nikkud selection"
+        run: |
+          cd tk/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/tk/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
+            $GITHUB_WORKSPACE/tk/.github/test-scripts/orphan-nikkud-sel.tcl 2>&1 | tee /tmp/orphan.log
+
+      - name: Publish results
+        if: always()
+        run: |
+          cd tk
+          git config user.name ci-bot
+          git config user.email ci-bot@users.noreply.github.com
+          mkdir -p .ci-logs
+          cp /tmp/orphan.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
+          cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
+          git add .ci-logs
+          git commit -qm "CI logs orphan-nikkud ${{ github.sha }}"
+          git push -qf origin HEAD:refs/heads/ci-results/ci-orphan-nikkud
