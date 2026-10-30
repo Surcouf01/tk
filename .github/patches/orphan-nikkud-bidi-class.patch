@@ -1,0 +1,108 @@
+--- a2/generic/tkTextDisp.c	2026-10-30 05:24:45.064674776 +0000
++++ b2/generic/tkTextDisp.c	2026-10-30 05:24:45.080674772 +0000
+@@ -16,6 +16,7 @@
+ #include "tkInt.h"
+ #include "tkText.h"
+ #include "tk3d.h"
++#include <mojibake.h>
+ 
+ #ifdef _WIN32
+ #include "tkWinInt.h"
+@@ -483,13 +484,21 @@
+  * ChunkIsRtl --
+  *
+  *	Determine if a string of UTF-8 text has RTL base direction, by
+- *	scanning for the first Unicode character with a strong bidi category.
+- *	RTL strong categories: R (Arabic Letter excluded), AL, RLE, RLO, RLI.
+- *	LTR strong categories: L, LRE, LRO, LRI.
++ *	scanning for the first Unicode character with a strong bidi class.
+  *	This is the Unicode P2/P3 paragraph-direction algorithm applied at
+  *	chunk level, which is sufficient for the single-script chunks that
+  *	TkTextCharLayoutProc produces.
+  *
++ *	The Bidi_Class of every character is taken from the mojibake
++ *	Unicode tables (Unicode 18) that Tk already ships, so no code-point
++ *	ranges are hand-maintained here.  Per UAX #9 only the strong classes
++ *	L, R and AL decide the direction: in particular non-spacing marks
++ *	(NSM) are skipped, and rule W1 resolves them to the class of the
++ *	preceding character (to the embedding level at the start of text).
++ *	This makes a base-less vowel point such as an orphan Hebrew nikkud
++ *	(U+05B0) neutral, instead of letting it flip the direction of a
++ *	whole chunk that actually starts with strong LTR text. [8504cdc7c8]
++ *
+  * Results:
+  *	true if the chunk is RTL, false if LTR or neutral.
+  */
+@@ -503,55 +512,33 @@
+     while (p < end) {
+ 	int ch;
+ 	Tcl_Size chLen = Tcl_UtfToUniChar(p, &ch);
++	int32_t bidiClass;
+ 
+ 	if (chLen <= 0) {
+ 	    break;
+ 	}
+ 
+-	/*
+-	 * Strong RTL ranges (Unicode 15).  We check these first, then LTR.
+-	 * The first strong character determines the chunk direction (P2/P3).
+-	 *
+-	 *   U+0590..U+08FF  Hebrew, Arabic, Syriac, NKo, Samaritan, Mandaic,
+-	 *                   Arabic Extended-A/B and all related supplements.
+-	 *                   (Note: 0x0700-0x074F Syriac and 0x07C0-0x07FF NKo
+-	 *                    are already contained in this single range.)
+-	 *   U+0780..U+07BF  Thaana  (falls inside the range above; listed
+-	 *                    separately in comments for clarity)
+-	 *   U+FB1D..U+FEFF  Hebrew/Arabic Presentation Forms A and B
+-	 *   U+10800..U+10FFF Historical RTL scripts (Phoenician, Aramaic, …)
+-	 */
+-
+-	/* Hebrew, Arabic, Syriac, NKo, Thaana, Samaritan and all supplements */
+-	if (ch >= 0x0590 && ch <= 0x08FF) {
+-	    return true;
+-	}
+-	/* Hebrew and Arabic presentation forms */
+-	if (ch >= 0xFB1D && ch <= 0xFEFF) {
+-	    return true;
+-	}
+-	/* Historical RTL scripts */
+-	if (ch >= 0x10800 && ch <= 0x10FFF) {
+-	    return true;
++	if (mjb_codepoint_property_int(ch, MJB_PR_BIDI_CLASS,
++		&bidiClass) != MJB_STATUS_OK) {
++	    /* Unknown codepoint: treat as neutral and keep scanning. */
++	    p += chLen;
++	    continue;
+ 	}
+ 
+-	/*
+-	 * Strong LTR: Basic Latin letters, Latin Extended, Greek, Cyrillic,
+-	 * CJK Unified, Hangul, Hiragana/Katakana.  Anything alphabetic that
+-	 * is not caught by the RTL ranges above is LTR for our purposes.
+-	 */
+-	if ((ch >= 0x0041 && ch <= 0x005A) ||   /* A-Z */
+-	    (ch >= 0x0061 && ch <= 0x007A) ||   /* a-z */
+-	    (ch >= 0x00C0 && ch <= 0x02AF) ||   /* Latin Extended */
+-	    (ch >= 0x0370 && ch <= 0x03FF) ||   /* Greek */
+-	    (ch >= 0x0400 && ch <= 0x04FF) ||   /* Cyrillic */
+-	    (ch >= 0x4E00 && ch <= 0x9FFF) ||   /* CJK Unified */
+-	    (ch >= 0xAC00 && ch <= 0xD7AF) ||   /* Hangul */
+-	    (ch >= 0x3040 && ch <= 0x30FF)) {   /* Hiragana/Katakana */
++	switch (bidiClass) {
++	case MJB_PR_BIDI_CLASS_L:
+ 	    return false;
++	case MJB_PR_BIDI_CLASS_R:
++	case MJB_PR_BIDI_CLASS_AL:
++	    return true;
++	default:
++	    /* Everything else (NSM, AN, EN, digits, punctuation,
++	     * whitespace, embedding and isolate controls) is not strong:
++	     * per rule P2 it cannot decide the direction. */
++
++	    break;
+ 	}
+ 
+-	/* Neutral character (digit, punctuation, whitespace) — keep scanning */
+ 	p += chLen;
+     }
+ 

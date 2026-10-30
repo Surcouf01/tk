@@ -15,6 +15,11 @@ jobs:
         with:
           path: tk
 
+      - name: "Apply generic fix [8504cdc7c8] (ChunkIsRtl driven by mjb Bidi_Class)"
+        run: |
+          cd tk
+          patch -p1 --fuzz=3 < .github/patches/orphan-nikkud-bidi-class.patch
+
       - name: Install build dependencies
         run: |
           sudo apt-get update
@@ -43,7 +48,7 @@ jobs:
           make -j$(nproc)
           make install
 
-      - name: Build Tk (trunk, bidi)
+      - name: Build Tk (trunk + generic fix, bidi)
         run: |
           set -o pipefail
           cd tk/unix
@@ -51,7 +56,7 @@ jobs:
                       --prefix=$GITHUB_WORKSPACE/inst --enable-bidi
           make -j$(nproc) 2>&1 | tee /tmp/tkbuild.log | tail -20
 
-      - name: "Test [8504cdc7c8]: orphan nikkud selection (trunk unpatched: expected FAIL)"
+      - name: "Test [8504cdc7c8]: orphan nikkud selection (generic fix: expected PASS)"
         run: |
           cd tk/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/tk/library
@@ -71,5 +76,5 @@ jobs:
           cp /tmp/orphan.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
           cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
           git add .ci-logs
-          git commit -qm "CI logs orphan-trunk ${{ github.sha }}"
-          git push -qf origin HEAD:refs/heads/ci-results/orphan-trunk
+          git commit -qm "CI logs orphan-fixed2 ${{ github.sha }}"
+          git push -qf origin HEAD:refs/heads/ci-results/orphan-fixed2
