@@ -1,5 +1,5 @@
---- a2/generic/tkTextDisp.c	2026-10-30 05:31:43.731557481 +0000
-+++ b2/generic/tkTextDisp.c	2026-10-30 05:31:43.744557477 +0000
+--- generic/tkTextDisp.c
++++ generic/tkTextDisp.c
 @@ -16,6 +16,7 @@
  #include "tkInt.h"
  #include "tkText.h"
@@ -8,31 +8,25 @@
  
  #ifdef _WIN32
  #include "tkWinInt.h"
-@@ -509,6 +510,30 @@
+@@ -509,6 +510,29 @@
  	}
  
  	/*
-+	 * Nonspacing and enclosing combining marks (Bidi_Class NSM) are not
-+	 * strong characters: UAX #9 rule P2 skips them when searching for
-+	 * the first strong character, and rule W1 resolves them to the class
-+	 * of the preceding character (to the embedding level at the start
-+	 * of the text).  Their class is taken from the mojibake Unicode
-+	 * tables (General_Category Mn or Me == Bidi_Class NSM) so that no
-+	 * code-point ranges are hand-maintained here.  This makes a
-+	 * base-less vowel point such as an orphan Hebrew nikkud (U+05B0)
-+	 * neutral, instead of letting it flip the direction of a whole
-+	 * chunk that actually starts with strong LTR text. [8504cdc7c8]
++	 * Combining marks are not strong characters: UAX #9 rule P2
++	 * skips nonspacing marks when searching for the first strong
++	 * character, and rule W1 resolves a mark to the class of the
++	 * preceding character (to the embedding level at the start of
++	 * the text).  Their category is taken from the mojibake Unicode
++	 * tables (General_Category Mn, Mc or Me) so that no code-point
++	 * ranges are hand-maintained here.  This makes a base-less
++	 * vowel point such as an orphan Hebrew nikkud (U+05B0) neutral,
++	 * instead of letting it flip the direction of a whole chunk
++	 * that actually starts with strong LTR text. [8504cdc7c8]
 +	 */
 +
-+	{
-+	    int32_t gc;
-+
-+	    if (mjb_codepoint_property_int(ch, MJB_PR_GENERAL_CATEGORY,
-+		    &gc) == MJB_STATUS_OK
-+		    && (gc == MJB_CATEGORY_MN || gc == MJB_CATEGORY_ME)) {
-+		p += chLen;
-+		continue;
-+	    }
++	if (mjb_codepoint_is_combining(ch)) {
++	    p += chLen;
++	    continue;
 +	}
 +
 +	/*
