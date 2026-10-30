@@ -2,16 +2,24 @@
 # Ticket [8504cdc7c8]: "selection drawn shifted left and overlapping
 # existing text when selecting right of a base-less vowel point".
 #
-# Reproducer based on Genesis 38:1 (Hebrew): the line starts with a
-# base-less vowel point -- the patach U+05B7 of the first word, its base
-# consonant absent, as in the ticket -- followed by a bit of LTR text to
-# the right of the mark (the verse reference "Gen. 38:1"), then the
-# Hebrew verse itself.  Checks: per-index bboxes, layout direction,
-# bbox/index round-trip, cell overlap, and a simulated mouse-drag
-# selection over the LTR reference.  Geometry checks are deliberately
-# restricted to the region left of the verse so that unrelated,
-# separately ticketed strong-RTL/cluster issues do not mask the
-# direction bug reported here.
+# Reproducer based on Genesis 38:1.  Two lines:
+#
+#   line 1 (the bug trigger): a base-less vowel point -- the patach
+#   U+05B7 of the first word of Genesis 38:1, its base consonant absent,
+#   as in the ticket -- followed by LTR text to the right of the mark:
+#   the verse reference "Gen. 38:1" and the first sentence of the JPS
+#   translation.  The first strong character is 'G' (L), so the line
+#   must be laid out left-to-right; the selection geometry must round-
+#   trip, and a simulated mouse drag over the reference must select it.
+#
+#   line 2 (non-regression): the Hebrew text of Genesis 38:1 itself,
+#   starting with a strong RTL letter.  It must stay laid out
+#   right-to-left, i.e. the NSM fix must not make RTL lines flip.
+#
+# Line 1 deliberately contains no Hebrew: the separately ticketed
+# "dancing selection" bug (sel tag scrambles layout of lines containing
+# RTL runs, and point-to-index during an active selection jumps to end
+# of line) would otherwise mask the direction bug reported here.
 if {[catch {package require Tk} err]} {
     puts "SKIP: $err"
     exit 0
@@ -33,34 +41,38 @@ proc isMark {ch} {
 pack [text .t -font {{DejaVu Sans} 16} -wrap none -borderwidth 0 \
     -highlightthickness 0 -padx 0 -pady 0]
 
-# Genesis 38:1: base-less patach, then the LTR reference, then the verse.
-set line "\u05B7 Gen. 38:1 \u2014 \u05D5\u05B7\u05D9\u05B0\u05D4\u05B4\u05D9\u0020\u05D1\u05B8\u05BC\u05E2\u05B5\u05EA\u0020\u05D4\u05B7\u05D4\u05B4\u05D5\u05D0\u0020\u05D5\u05B7\u05D9\u05B5\u05BC\u05E8\u05B6\u05D3\u0020\u05D9\u05B0\u05D4\u05D5\u05BC\u05D3\u05B8\u05D4\u0020\u05DE\u05B5\u05D0\u05B5\u05EA\u0020\u05D0\u05B6\u05D7\u05B8\u05D9\u05D5\u0020\u05D5\u05B7\u05D9\u05B5\u05BC\u05D8\u0020\u05E2\u05B7\u05D3\u05BE\u05D0\u05B4\u05D9\u05E9\u05C1\u0020\u05E2\u05B2\u05D3\u05BB\u05DC\u05B8\u05BC\u05DE\u05B4\u05D9\u0020\u05D5\u05BC\u05E9\u05B0\u05C1\u05DE\u05D5\u05B9\u0020\u05D7\u05B4\u05D9\u05E8\u05B8\u05D4\u05C3"
-.t insert 1.0 $line
+set line1 "\u05B7 Gen. 38:1 \u2014 And it came to pass at that time, that Judah went down from his brethren."
+set line2 "\u05D5\u05B7\u05D9\u05B0\u05D4\u05B4\u05D9\u0020\u05D1\u05B8\u05BC\u05E2\u05B5\u05EA\u0020\u05D4\u05B7\u05D4\u05B4\u05D5\u05D0\u0020\u05D5\u05B7\u05D9\u05B5\u05BC\u05E8\u05B6\u05D3\u0020\u05D9\u05B0\u05D4\u05D5\u05BC\u05D3\u05B8\u05D4\u0020\u05DE\u05B5\u05D0\u05B5\u05EA\u0020\u05D0\u05B6\u05D7\u05B8\u05D9\u05D5\u0020\u05D5\u05B7\u05D9\u05B5\u05BC\u05D8\u0020\u05E2\u05B7\u05D3\u05BE\u05D0\u05B4\u05D9\u05E9\u05C1\u0020\u05E2\u05B2\u05D3\u05BB\u05DC\u05B8\u05BC\u05DE\u05B4\u05D9\u0020\u05D5\u05BC\u05E9\u05B0\u05C1\u05DE\u05D5\u05B9\u0020\u05D7\u05B4\u05D9\u05E8\u05B8\u05D4\u05C3"
+.t insert 1.0 $line1\n$line2
 update
 
-set n [.t count -chars 1.0 1.end]
+set n1 [.t count -chars 1.0 1.end]
+set n2 [.t count -chars 2.0 2.end]
 set ref "Gen. 38:1"
-set gs [string first $ref $line]
+set gs [string first $ref $line1]
 set glen [string length $ref]
 set gLast [expr {$gs + $glen - 1}]
-set vs [string first "\u05D5\u05B7\u05D9\u05B0\u05D4\u05B4\u05D9" $line]
-puts "nchars=$n line='[.t get 1.0 1.end]'"
-puts "ref at 1.$gs..1.[expr {$gs + $glen}]  verse starts at 1.$vs"
-puts "dlineinfo: [.t dlineinfo 1.0]"
+puts "line1 nchars=$n1 line='[.t get 1.0 1.end]'"
+puts "line2 nchars=$n2 line='[.t get 2.0 2.end]'"
+puts "ref at 1.$gs..1.[expr {$gs + $glen}]"
+puts "dlineinfo 1.0: [.t dlineinfo 1.0]"
 
-# --- Dump per-index bboxes -------------------------------------------------
-for {set i 0} {$i < $n} {incr i} {
-    puts "  bbox $i: [.t bbox 1.$i]  char=[scan [.t get 1.$i] %c]"
+# --- Dump per-index bboxes (both lines) ------------------------------------
+for {set i 0} {$i < $n1} {incr i} {
+    puts "  bbox 1.$i: [.t bbox 1.$i]  char=[scan [.t get 1.$i] %c]"
+}
+for {set i 0} {$i < $n2} {incr i} {
+    puts "  bbox 2.$i: [.t bbox 2.$i]  char=[scan [.t get 2.$i] %c]"
 }
 
-# --- Check 1a: the LTR reference is laid out left-to-right ----------------
+# --- Check 1: the LTR sentence of line 1 is laid out left-to-right ---------
 # The orphan patach U+05B7 is a combining mark (Bidi_Class NSM): per
 # UAX #9 (rules P2/W1) it is not a strong character and must not decide
-# the direction.  The first strong character is 'G' (L), so the reference
-# must be laid out in logical order, left to right.
+# the direction.  The first strong character is 'G' (L), so the text
+# right of the mark must be laid out in logical order, left to right.
 set prevX -1
 set dirOK 1
-for {set i $gs} {$i <= $gLast} {incr i} {
+for {set i 2} {$i < $n1} {incr i} {
     set b [.t bbox 1.$i]
     if {$b eq ""} continue
     lassign $b bx by bw bh
@@ -71,26 +83,14 @@ for {set i $gs} {$i <= $gLast} {incr i} {
     }
     set prevX $bx
 }
-if {$dirOK} { puts "PASS: LTR reference laid out left-to-right (NSM mark did not flip direction)" }
+if {$dirOK} { puts "PASS: LTR text of line 1 laid out left-to-right (NSM mark did not flip direction)" }
 
-# --- Check 1b: the Hebrew verse sits right of the LTR reference -----------
-set bv [.t bbox 1.$vs]
-set bl [.t bbox 1.$gLast]
-if {$bv eq "" || $bl eq ""} {
-    fail "cannot locate verse start or reference end"
-} elseif {[lindex $bv 0] > [lindex $bl 0]} {
-    puts "PASS: Hebrew verse laid out to the right of the LTR reference (LTR base direction)"
-} else {
-    fail "chunk order: verse starts at x=[lindex $bv 0], not right of the LTR reference ending at x=[lindex $bl 0] (line flipped RTL by the orphan NSM mark)"
-}
-
-# --- Check 2: bbox -> index -> bbox round-trip -----------------------------
-# Restricted to the region left of the Hebrew verse (mark, reference,
-# dash): zero-advance marks legitimately share a neighbouring cell, so
-# for them (and spaces) we tolerate landing on an adjacent index; base
-# characters must round-trip exactly.
+# --- Check 2: bbox -> index -> bbox round-trip (line 1) -------------------
+# A zero-advance orphan mark legitimately shares the cell of the next
+# character, so for it (and for spaces) we tolerate landing on an
+# adjacent index; base characters must round-trip exactly.
 set rtOK 1
-for {set i 0} {$i < $vs} {incr i} {
+for {set i 0} {$i < $n1} {incr i} {
     set b [.t bbox 1.$i]
     if {$b eq ""} continue
     lassign $b bx by bw bh
@@ -104,16 +104,16 @@ for {set i 0} {$i < $vs} {incr i} {
             break
         }
     } elseif {$bi != $i && $bi != $i+1} {
-        fail "round-trip: index 1.$i (char U+[format %04X $ch]) center maps to $back, expected 1.$i"
+        fail "round-trip: index 1.$i (char [format %c $ch]) center maps to $back, expected 1.$i"
         set rtOK 0
         break
     }
 }
 if {$rtOK} { puts "PASS: bbox/index round-trip consistent" }
 
-# --- Check 3: base character cells do not overlap --------------------------
+# --- Check 3: base character cells of line 1 do not overlap ----------------
 set cells {}
-for {set i 0} {$i < $vs} {incr i} {
+for {set i 0} {$i < $n1} {incr i} {
     set ch [scan [.t get 1.$i] %c]
     if {[isMark $ch]} continue
     set b [.t bbox 1.$i]
@@ -135,7 +135,7 @@ foreach c $cells {
 }
 if {$ovOK} { puts "PASS: cell geometry consistent, no overlap" }
 
-# --- Check 4: simulated mouse drag over the LTR reference ------------------
+# --- Check 4: simulated mouse drag over the LTR reference -----------------
 # Press at the center of the 'G' of "Gen.", drag to the '1' of "38:1",
 # release.  The selection must cover roughly [1.$gs, 1.[expr {$gs+$glen}]).
 set bp [.t bbox 1.$gs]
@@ -175,6 +175,37 @@ if {$bp eq "" || $bq eq ""} {
         }
     }
 }
+
+# --- Check 5: the Hebrew verse (line 2) stays laid out right-to-left --------
+# Line 2 starts with a strong RTL letter (U+05D5), so its base clusters
+# must appear in decreasing x order.  Combining marks share the cell of
+# their base and are skipped.  This guards against the NSM fix flipping
+# legitimate RTL lines.
+set prevX 1000000
+set rtlOK 1
+set firstX -1
+set lastX -1
+for {set i 0} {$i < $n2} {incr i} {
+    set ch [scan [.t get 2.$i] %c]
+    if {[isMark $ch]} continue
+    set b [.t bbox 2.$i]
+    if {$b eq ""} continue
+    lassign $b bx by bw bh
+    if {$bw <= 2} continue
+    if {$firstX < 0} { set firstX $bx }
+    set lastX $bx
+    if {$bx > $prevX + 1} {
+        fail "rtl: verse index 2.$i is at x=$bx, right of previous base at x=$prevX (line 2 starts with strong RTL text and must be laid out right-to-left)"
+        set rtlOK 0
+        break
+    }
+    set prevX $bx
+}
+if {$rtlOK && $firstX >= 0 && $lastX > $firstX} {
+    fail "rtl: verse laid out left-to-right (first base at x=$firstX, last at x=$lastX)"
+    set rtlOK 0
+}
+if {$rtlOK} { puts "PASS: Hebrew verse laid out right-to-left (strong RTL start respected)" }
 
 # --- Summary ----------------------------------------------------------------
 if {$::failures} {
