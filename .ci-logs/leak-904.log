@@ -1,0 +1,16 @@
+Tk 9.0.4, PID 10034, start RSS 20716 kB
+RESULT rect       LEAK         80.1 bytes/item   (RSS 23540 -> 36688 kB, 168000 items)
+RESULT text       LEAK         80.0 bytes/item   (RSS 39648 -> 52780 kB, 168000 items)
+Error in startup script: wrong # coordinates: expected 0 or 2, got 4
+    while executing
+".c coords $id [expr {10 + $i % 50}] 10 [expr {100 + $i % 50}] 100 "
+    ("foreach" body line 1)
+    invoked from within
+"foreach id $ids { .c coords $id [expr {10 + $i % 50}] 10 [expr {100 + $i % 50}] 100 }"
+    ("for" body line 2)
+    invoked from within
+"for {set i 0} {$i < 1500} {incr i} {
+    foreach id $ids { .c coords $id [expr {10 + $i % 50}] 10 [expr {100 + $i % 50}] 100 }
+    update
+}"
+    (file "/home/runner/work/tk/tk/repo/.github/test-scripts/canvas-item-leak.tcl" line 85)
