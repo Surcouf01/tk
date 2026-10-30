@@ -60,6 +60,12 @@ jobs:
           ls dancing_bidi | head -20 | tee /tmp/fetch.log
           cat dancing_bidi/manifest.uuid >> /tmp/fetch.log 2>/dev/null || true
 
+      - name: Apply TK_DEBUG_MEASURE instrumentation
+        run: |
+          cd dancing_bidi
+          patch -p0 generic/tkTextDisp.c < $GITHUB_WORKSPACE/repo/.github/patches/dancing-diag.patch
+          echo "instrumentation applied" >> /tmp/fetch.log
+
       - name: Build Tk (dancing_bidi, bidi)
         run: |
           set -o pipefail
@@ -106,7 +112,7 @@ jobs:
           cd dancing_bidi/unix
           export TK_LIBRARY=$GITHUB_WORKSPACE/dancing_bidi/library
           export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/dancing_bidi/unix
-          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
+          xvfb-run -a -s "-screen 0 1280x1024x24" env TK_DEBUG_MEASURE=1 ./wish \
             $GITHUB_WORKSPACE/repo/.github/test-scripts/mixed-bidi-diag.tcl 2>&1 | tee /tmp/diag-mixed.log
 
       - name: "text.test suite (informational)"
