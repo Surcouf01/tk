@@ -1,5 +1,5 @@
---- generic/tkTextDisp.c
-+++ generic/tkTextDisp.c
+--- a/generic/tkTextDisp.c
++++ b/generic/tkTextDisp.c
 @@ -16,6 +16,7 @@
  #include "tkInt.h"
  #include "tkText.h"
@@ -8,7 +8,7 @@
  
  #ifdef _WIN32
  #include "tkWinInt.h"
-@@ -509,6 +510,29 @@
+@@ -509,6 +510,24 @@
  	}
  
  	/*
