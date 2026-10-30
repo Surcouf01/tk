@@ -1,0 +1,78 @@
+--- a/generic/tkTextDisp.c	2026-10-30 05:15:13.738834783 +0000
++++ b/generic/tkTextDisp.c	2026-10-30 05:15:13.751834779 +0000
+@@ -480,6 +480,56 @@
+ static Tcl_ThreadDataKey dataKey;
+ 
+ /*
++ *--------------------------------------------------------------
++ *
++ * IsBidiNsm --
++ *
++ *	Test whether the Unicode character ch has Bidi_Class NSM
++ *	(Nonspacing_Mark), covering the combining marks of the scripts
++ *	that ChunkIsRtl scans for RTL direction.  Per UAX #9, NSM
++ *	characters are not strong: rule P2 skips them when searching for
++ *	the first strong character, and rule W1 resolves them to the class
++ *	of the preceding character (to sor at the start of the text).
++ *
++ * Results:
++ *	true if ch is a combining mark (NSM), false otherwise.
++ *
++ * Side effects:
++ *	None.
++ *
++ *--------------------------------------------------------------
++ */
++
++static bool
++IsBidiNsm(int ch)
++{
++    return (ch >= 0x0591 && ch <= 0x05BD)  /* Hebrew accents and points */
++	|| ch == 0x05BF
++	|| (ch >= 0x05C1 && ch <= 0x05C2)
++	|| (ch >= 0x05C4 && ch <= 0x05C5)
++	|| ch == 0x05C7
++	|| (ch >= 0x0610 && ch <= 0x061A)  /* Arabic honorific marks */
++	|| (ch >= 0x064B && ch <= 0x065F)  /* Arabic vowel marks */
++	|| ch == 0x0670
++	|| (ch >= 0x06D6 && ch <= 0x06DC)
++	|| (ch >= 0x06DF && ch <= 0x06E4)
++	|| (ch >= 0x06E7 && ch <= 0x06E8)
++	|| (ch >= 0x06EA && ch <= 0x06ED)
++	|| ch == 0x0711                         /* Syriac */
++	|| (ch >= 0x0730 && ch <= 0x074A)
++	|| (ch >= 0x07A6 && ch <= 0x07B0)  /* Thaana */
++	|| (ch >= 0x07EB && ch <= 0x07F3)  /* NKo */
++	|| (ch >= 0x0816 && ch <= 0x0819)
++	|| (ch >= 0x081B && ch <= 0x0823)
++	|| (ch >= 0x0825 && ch <= 0x0827)
++	|| (ch >= 0x0829 && ch <= 0x082D)
++	|| (ch >= 0x0859 && ch <= 0x085B)  /* Mandaic */
++	|| (ch >= 0x08D3 && ch <= 0x08E1)
++	|| (ch >= 0x08E3 && ch <= 0x0902)
++	|| ch == 0xFB1E;   /* Hebrew point Judeo-Spanish, presentation */
++}
++
++/*
+  * ChunkIsRtl --
+  *
+  *	Determine if a string of UTF-8 text has RTL base direction, by
+@@ -509,6 +559,18 @@
+ 	}
+ 
+ 	/*
++	 * Combining marks (Bidi_Class NSM) are not strong characters
++	 * (UAX #9 rules P2 and W1): keep scanning instead of letting a
++	 * base-less vowel point, e.g. an orphan Hebrew nikkud such as
++	 * U+05B0, decide the direction of the whole chunk. [8504cdc7c8]
++	 */
++
++	if (IsBidiNsm(ch)) {
++	    p += chLen;
++	    continue;
++	}
++
++	/*
+ 	 * Strong RTL ranges (Unicode 15).  We check these first, then LTR.
+ 	 * The first strong character determines the chunk direction (P2/P3).
+ 	 *
