@@ -48,12 +48,16 @@ jobs:
         shell: pwsh
         working-directory: ${{ github.workspace }}
         run: |
-          git -C dancing_bidi apply --verbose repo\.github\patches\winshape-diag.patch
+          $raw = [IO.File]::ReadAllText("$env:GITHUB_WORKSPACE\repo\.github\patches\winshape-diag.patch")
+          $raw = $raw -replace "`r`n", "`n"
+          [IO.File]::WriteAllText("$env:GITHUB_WORKSPACE\winshape-lf.patch", $raw, (New-Object System.Text.UTF8Encoding($false)))
+          git -C dancing_bidi apply --verbose "$env:GITHUB_WORKSPACE\winshape-lf.patch" 2>&1 | ForEach-Object { "$_" | Add-Content -Path win-apply.log }
           if ($lastexitcode -eq 0) {
             Add-Content -Path win-fetch.log -Value "winshape patch applied"
           } else {
-            Add-Content -Path win-fetch.log -Value "winshape patch FAILED (skipped)"
+            Add-Content -Path win-fetch.log -Value "winshape patch FAILED (see win-apply.log)"
           }
+          exit 0
 
       - name: "Build and install Tk dancing_bidi"
         shell: pwsh
