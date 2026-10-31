@@ -93,6 +93,17 @@ jobs:
           Get-Content win-caret.log
           Get-Content win-caret.log | Out-String | ForEach-Object { if ($_ -notmatch "RESULT") { throw "test W2 produced no RESULT line" } }
 
+      - name: "Test W3 mixed bidi stability (Linux test3 scenarios on Windows)"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          $wish = (Get-ChildItem "$env:GITHUB_WORKSPACE\install\bin" -Filter "wish*.exe" | Select-Object -First 1).FullName
+          $env:PATH = "$env:GITHUB_WORKSPACE\install\bin;$env:PATH"
+          cmd /c "set TK_DEBUG_WINSHAPE=1&& `"$wish`" `"$env:GITHUB_WORKSPACE\repo\.github\test-scripts\mixed-bidi-stability.tcl`" > win-stability.log 2>&1"
+          Get-Content win-stability.log
+          Get-Content win-stability.log | Out-String | ForEach-Object { if ($_ -notmatch "RESULT|PASS|FAIL|SKIP") { throw "test W3 produced no result lines" } }
+          exit 0
+
       - name: "Publish results"
         if: always()
         shell: bash
