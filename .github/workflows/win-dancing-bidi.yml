@@ -59,6 +59,21 @@ jobs:
           }
           exit 0
 
+      - name: "Apply candidate fix patch (tolerant)"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          $raw2 = [IO.File]::ReadAllText("$env:GITHUB_WORKSPACE\repo\.github\patches\ltr-chunk-isrtl.patch")
+          $raw2 = $raw2 -replace "`r`n", "`n"
+          [IO.File]::WriteAllText("$env:GITHUB_WORKSPACE\ltr-fix-lf.patch", $raw2, (New-Object System.Text.UTF8Encoding($false)))
+          git -C dancing_bidi apply --verbose "$env:GITHUB_WORKSPACE\ltr-fix-lf.patch" 2>&1 | ForEach-Object { "$_" | Add-Content -Path win-apply.log }
+          if ($lastexitcode -eq 0) {
+            Add-Content -Path win-fetch.log -Value "ltr-chunk-isrtl patch applied"
+          } else {
+            Add-Content -Path win-fetch.log -Value "ltr-chunk-isrtl patch FAILED (see win-apply.log)"
+          }
+          exit 0
+
       - name: "Build and install Tk dancing_bidi"
         shell: pwsh
         working-directory: ${{ github.workspace }}

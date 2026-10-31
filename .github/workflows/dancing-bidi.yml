@@ -60,6 +60,17 @@ jobs:
           ls dancing_bidi | head -20 | tee /tmp/fetch.log
           cat dancing_bidi/manifest.uuid >> /tmp/fetch.log 2>/dev/null || true
 
+      - name: "Apply candidate fix patches (tolerant)"
+        run: |
+          cd dancing_bidi
+          for p in ltr-chunk-isrtl; do
+            if git apply $GITHUB_WORKSPACE/repo/.github/patches/$p.patch; then
+              echo "applied $p" >> /tmp/fetch.log
+            else
+              echo "skipped $p (already merged or failed)" >> /tmp/fetch.log
+            fi
+          done
+
       - name: Build Tk (dancing_bidi, bidi)
         run: |
           set -o pipefail
