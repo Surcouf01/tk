@@ -63,7 +63,7 @@ jobs:
       - name: "Apply candidate fix patches (tolerant)"
         run: |
           cd dancing_bidi
-          for p in ltr-chunk-isrtl; do
+          for p in ltr-chunk-isrtl orphan-nikkud-chunkbidi; do
             if git apply $GITHUB_WORKSPACE/repo/.github/patches/$p.patch; then
               echo "applied $p" >> /tmp/fetch.log
             else

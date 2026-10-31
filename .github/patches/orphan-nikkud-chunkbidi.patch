@@ -1,0 +1,25 @@
+--- a/generic/tkTextDisp.c
++++ b/generic/tkTextDisp.c
+@@ -1403,6 +1403,22 @@
+ 	if (chLen <= 0) {
+ 	    break;
+ 	}
++	/*
++	 * Combining marks are not strong characters: UAX #9 rule P2 skips
++	 * nonspacing marks when searching for the first strong character,
++	 * and rule W1 resolves a mark to the class of the preceding
++	 * character (to the embedding level at the start of the text).
++	 * This is the same skip as in ChunkIsRtl: without it, a base-less
++	 * vowel point such as an orphan Hebrew nikkud (U+05B0..U+05BD, all
++	 * inside the 0x0590..0x08FF range below) makes this function return
++	 * RTL, so BidiReorderChunks mirrors the whole display line even
++	 * though the first strong character is L. [8504cdc7c8]
++	 */
++
++	if (mjb_codepoint_is_combining(ch)) {
++	    p += chLen;
++	    continue;
++	}
+ 	/* Hebrew, Arabic, Syriac, NKo, Thaana, Samaritan and supplements */
+ 	if (ch >= 0x0590 && ch <= 0x08FF) {
+ 	    return 2;
