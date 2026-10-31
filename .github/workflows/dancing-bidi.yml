@@ -60,12 +60,16 @@ jobs:
           ls dancing_bidi | head -20 | tee /tmp/fetch.log
           cat dancing_bidi/manifest.uuid >> /tmp/fetch.log 2>/dev/null || true
 
-      - name: Apply TK_DEBUG_MEASURE instrumentation + mixed-bidi fix
+      - name: Apply diagnostic/fix patches (tolerant: already-merged hunks skip)
         run: |
           cd dancing_bidi
-          patch -p0 generic/tkTextDisp.c < $GITHUB_WORKSPACE/repo/.github/patches/dancing-diag.patch
-          patch -p0 generic/tkTextDisp.c < $GITHUB_WORKSPACE/repo/.github/patches/dancing-mixed-fix.patch
-          echo "instrumentation + fix applied" >> /tmp/fetch.log
+          for p in dancing-diag dancing-mixed-fix; do
+            if patch -p0 --force generic/tkTextDisp.c < $GITHUB_WORKSPACE/repo/.github/patches/$p.patch; then
+              echo "applied $p" >> /tmp/fetch.log
+            else
+              echo "skipped $p (already merged or obsolete)" >> /tmp/fetch.log
+            fi
+          done
 
       - name: Build Tk (dancing_bidi, bidi)
         run: |
@@ -107,6 +111,14 @@ jobs:
           xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
             $GITHUB_WORKSPACE/repo/.github/test-scripts/orphan-nikkud-sel.tcl 2>&1 | tee /tmp/test4.log
 
+      - name: "Test 5: caret at the right margin of an RTL paragraph (Kevin bug 1)"
+        run: |
+          cd dancing_bidi/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/dancing_bidi/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/dancing_bidi/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
+            $GITHUB_WORKSPACE/repo/.github/test-scripts/caret-rtl-margin.tcl 2>&1 | tee /tmp/test5.log
+
       - name: "text.test suite (informational)"
         continue-on-error: true
         run: |
@@ -122,7 +134,7 @@ jobs:
           git config user.name ci-bot
           git config user.email ci-bot@users.noreply.github.com
           mkdir -p .ci-logs
-          cp /tmp/diag.log /tmp/fetch.log /tmp/test1.log /tmp/test2.log /tmp/test3.log /tmp/test4.log /tmp/texttest.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
+          cp /tmp/diag.log /tmp/fetch.log /tmp/test1.log /tmp/test2.log /tmp/test3.log /tmp/test4.log /tmp/test5.log /tmp/texttest.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
           cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
           git add .ci-logs
           git commit -qm "CI logs dancing_bidi ${{ github.sha }}"
