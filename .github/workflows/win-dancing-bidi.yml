@@ -1,0 +1,106 @@
+name: dancing_bidi (Fossil) Windows tests
+
+on:
+  push:
+    branches:
+      - ci-fossil-dancing-bidi
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - name: "Checkout Tcl (trunk)"
+        uses: actions/checkout@v4
+        with:
+          repository: tcltk/tcl
+          path: tcl
+
+      - name: "Init MSVC"
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: "Build and install Tcl"
+        shell: pwsh
+        run: |
+          Set-Location tcl\win
+          nmake -f makefile.vc clean
+          if ($lastexitcode -ne 0) { throw "nmake clean tcl failed" }
+          nmake -f makefile.vc release install INSTALLDIR="$env:GITHUB_WORKSPACE\install" CHECKING=0
+          if ($lastexitcode -ne 0) { throw "nmake tcl failed" }
+
+      - name: "Fetch Tk dancing_bidi tarball"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          curl.exe -sL -o dancing_bidi.tar.gz "https://core.tcl-lang.org/tk/tarball/dancing_bidi/dancing_bidi.tar.gz"
+          tar -xzf dancing_bidi.tar.gz
+          Set-Content -Path win-fetch.log -Value "manifest:"
+          Add-Content -Path win-fetch.log -Value (Get-Content dancing_bidi\manifest.uuid)
+
+      - name: "Apply Windows diag patch (tolerant)"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          git -C dancing_bidi apply --verbose repo\.github\patches\winshape-diag.patch
+          if ($lastexitcode -eq 0) {
+            Add-Content -Path win-fetch.log -Value "winshape patch applied"
+          } else {
+            Add-Content -Path win-fetch.log -Value "winshape patch FAILED (skipped)"
+          }
+
+      - name: "Build and install Tk dancing_bidi"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          Set-Location dancing_bidi\win
+          nmake -f makefile.vc clean
+          if ($lastexitcode -ne 0) { throw "nmake clean tk failed" }
+          nmake -f makefile.vc all TCLDIR="$env:GITHUB_WORKSPACE\tcl\win" INSTALLDIR="$env:GITHUB_WORKSPACE\install" CHECKING=0 2>&1 | Tee-Object -FilePath "$env:GITHUB_WORKSPACE\win-tkbuild.log" | Select-Object -Last 25
+          if ($lastexitcode -ne 0) { throw "nmake tk failed" }
+          nmake -f makefile.vc install TCLDIR="$env:GITHUB_WORKSPACE\tcl\win" INSTALLDIR="$env:GITHUB_WORKSPACE\install"
+          if ($lastexitcode -ne 0) { throw "nmake tk install failed" }
+
+      - name: "Test W1 mixed sel mirror (Kevin bug 2)"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          $wish = (Get-ChildItem "$env:GITHUB_WORKSPACE\install\bin" -Filter "wish*.exe" | Select-Object -First 1).FullName
+          if (-not $wish) { throw "wish.exe not found" }
+          Write-Host "wish = $wish"
+          $env:PATH = "$env:GITHUB_WORKSPACE\install\bin;$env:PATH"
+          cmd /c "set TK_DEBUG_WINSHAPE=1&& `"$wish`" `"$env:GITHUB_WORKSPACE\repo\.github\test-scripts\mixed-sel-mirror.tcl`" > win-mixed-sel.log 2>&1"
+          Get-Content win-mixed-sel.log
+          Get-Content win-mixed-sel.log | Out-String | ForEach-Object { if ($_ -notmatch "RESULT") { throw "test W1 produced no RESULT line" } }
+
+      - name: "Test W2 caret at RTL right margin (Kevin bug 1)"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          $wish = (Get-ChildItem "$env:GITHUB_WORKSPACE\install\bin" -Filter "wish*.exe" | Select-Object -First 1).FullName
+          $env:PATH = "$env:GITHUB_WORKSPACE\install\bin;$env:PATH"
+          cmd /c "set TK_DEBUG_WINSHAPE=1&& `"$wish`" `"$env:GITHUB_WORKSPACE\repo\.github\test-scripts\caret-rtl-margin.tcl`" > win-caret.log 2>&1"
+          Get-Content win-caret.log
+          Get-Content win-caret.log | Out-String | ForEach-Object { if ($_ -notmatch "RESULT") { throw "test W2 produced no RESULT line" } }
+
+      - name: "Publish results"
+        if: always()
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: |
+          cd repo
+          git config user.name ci-bot
+          git config user.email ci-bot@users.noreply.github.com
+          mkdir -p .ci-logs
+          cp ../win-*.log .ci-logs/ 2>/dev/null || true
+          cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
+          cp .github/patches/*.patch .ci-logs/ 2>/dev/null || true
+          git add .ci-logs
+          git commit -qm "CI win logs dancing_bidi ${{ github.sha }}"
+          git push -qf origin HEAD:refs/heads/ci-results/win-dancing-bidi
