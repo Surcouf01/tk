@@ -1,0 +1,221 @@
+
+Microsoft (R) Program Maintenance Utility Version 14.51.36260.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+*** Dependency rules are not being used.
+
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /Zl /GL- /DSTATIC_BUILD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib" /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tkStubLib.obj D:\a\tk\tk\dancing_bidi\win\..\generic\tkStubLib.c
+cl : Command line warning D9025 : overriding '/GL' with '/GL-'
+tkStubLib.c
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /Zl /GL- /DSTATIC_BUILD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib" /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ttkStubLib.obj D:\a\tk\tk\dancing_bidi\win\..\generic\ttk\ttkStubLib.c
+cl : Command line warning D9025 : overriding '/GL' with '/GL-'
+ttkStubLib.c
+	lib -nologo  -ltcg -out:D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tkstub.lib -nodefaultlib D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tkStubLib.obj D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ttkStubLib.obj
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUNICODE /D_UNICODE  -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\winMain.obj D:\a\tk\tk\dancing_bidi\win\..\win\winMain.c
+winMain.c
+	rc -fo D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\wish.res -r -i "D:\a\tk\tk\dancing_bidi\win\..\generic" -i "D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic"  -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" /DSTATIC_BUILD=0  /DDEBUG=0 -d UNCHECKED=0  /DCOMMAVERSION=9,1,0,0  /DDOTVERSION=\"9.1\"  /DVERSION=\"91\"  /DSUFX=\"\"  /DPROJECT=\"tk\"  /DPRJLIBNAME=\"tcl9tk91.dll\" D:\a\tk\tk\dancing_bidi\win\..\win\rc\wish.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk /DUNICODE /D_UNICODE -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tkMain2.obj D:\a\tk\tk\dancing_bidi\win\..\generic\tkMain.c
+tkMain.c
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk		 -DCFG_RUNTIME_DLLFILE="\"tcl9tk91.dll\""  -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tkPkgConfig.obj D:\a\tk\tk\dancing_bidi\win\..\generic\tkPkgConfig.c
+tkPkgConfig.c
+	copy /b D:\a\tk\tk\dancing_bidi\win\..\win\tkUuid.h.in+D:\a\tk\tk\dancing_bidi\win\..\manifest.uuid D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tkUuid.h
+D:\a\tk\tk\dancing_bidi\win\..\win\tkUuid.h.in
+D:\a\tk\tk\dancing_bidi\win\..\manifest.uuid
+        1 file(s) copied.
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk -ID:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tkWindow.obj D:\a\tk\tk\dancing_bidi\win\..\generic\tkWindow.c
+tkWindow.c
+	rc -fo D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\tk.res -r -i "D:\a\tk\tk\dancing_bidi\win\..\generic" -i "D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic"  -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" /DSTATIC_BUILD=0  /DDEBUG=0 -d UNCHECKED=0  /DCOMMAVERSION=9,1,0,0  /DDOTVERSION=\"9.1\"  /DVERSION=\"91\"  /DSUFX=\"\"  /DPROJECT=\"tk\"  /DPRJLIBNAME=\"tcl9tk91.dll\" D:\a\tk\tk\dancing_bidi\win\..\win\rc\tk.rc
+Microsoft (R) Windows (R) Resource Compiler Version 10.0.10011.16384
+
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ @C:\Users\RUNNER~1\AppData\Local\Temp\nm54E8.tmp
+tkConsole.c
+mojibake.c
+dictionaries.c
+thai.c
+lao.c
+khmer.c
+tk3d.c
+tkAccessibility.c
+tkArgv.c
+tkAtom.c
+tkBind.c
+tkBitmap.c
+tkBusy.c
+tkButton.c
+tkCanvArc.c
+tkCanvBmap.c
+tkCanvImg.c
+tkCanvLine.c
+tkCanvPoly.c
+tkCanvPs.c
+Compiling...
+tkCanvText.c
+tkCanvUtil.c
+tkCanvWind.c
+tkCanvas.c
+tkClipboard.c
+tkCmds.c
+tkColor.c
+tkConfig.c
+tkCursor.c
+tkEntry.c
+tkError.c
+tkEvent.c
+tkFileFilter.c
+tkFocus.c
+tkFont.c
+tkFrame.c
+tkGC.c
+tkGeometry.c
+tkGet.c
+tkGrab.c
+Compiling...
+tkGrid.c
+tkIcu.c
+tkImage.c
+tkImgBmap.c
+tkImgListFormat.c
+tkImgGIF.c
+tkImgPNG.c
+tkImgPPM.c
+tkImgSVGnano.c
+tkImgPhoto.c
+tkImgPhInstance.c
+tkImgUtil.c
+tkListbox.c
+tkMacWinMenu.c
+tkMain.c
+tkMenu.c
+tkMenubutton.c
+tkMenuDraw.c
+tkMessage.c
+tkPanedWindow.c
+Compiling...
+tkObj.c
+tkOldConfig.c
+tkOption.c
+tkPack.c
+tkPlace.c
+tkPointer.c
+tkRectOval.c
+tkScale.c
+tkScrollbar.c
+tkSelect.c
+tkStyle.c
+tkText.c
+tkTextBTree.c
+tkTextDisp.c
+tkTextGrapheme.c
+tkTextImage.c
+tkTextIndex.c
+tkTextMark.c
+tkTextTag.c
+tkTextWind.c
+Compiling...
+tkTrig.c
+tkUndo.c
+tkUtil.c
+tkVisual.c
+tkStubInit.c
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ @C:\Users\RUNNER~1\AppData\Local\Temp\nm8E58.tmp
+tkUnixMenubu.c
+tkUnixScale.c
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ @C:\Users\RUNNER~1\AppData\Local\Temp\nm8FD0.tmp
+xcolors.c
+xdraw.c
+xgc.c
+ximage.c
+xutil.c
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ @C:\Users\RUNNER~1\AppData\Local\Temp\nm91B6.tmp
+tkWin3d.c
+tkWin32Dll.c
+tkWinAccessibility.c
+tkWinButton.c
+tkWinClipboard.c
+tkWinColor.c
+tkWinColorEmoji.c
+tkWinConfig.c
+tkWinCursor.c
+tkWinDialog.c
+tkWinDraw.c
+tkWinEmbed.c
+tkWinFont.c
+tkWinGDI.c
+tkWinIco.c
+tkWinImage.c
+tkWinInit.c
+tkWinKey.c
+tkWinMenu.c
+tkWinPixmap.c
+Compiling...
+tkWinPointer.c
+tkWinRegion.c
+tkWinScrlbr.c
+tkWinSend.c
+tkWinSendCom.c
+tkWinSysTray.c
+tkWinWindow.c
+tkWinWm.c
+tkWinX.c
+stubs.c
+ttkWinMonitor.c
+ttkWinTheme.c
+ttkWinVistaTheme.c
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD -I"D:\a\tk\tk\tcl\generic" -I"D:\a\tk\tk\tcl\win" -I"D:\a\tk\tk\dancing_bidi\win\..\win" -I"D:\a\tk\tk\dancing_bidi\win\..\generic" -I"D:\a\tk\tk\dancing_bidi\win\..\bitmaps" -I"D:\a\tk\tk\dancing_bidi\win\..\xlib"  /DBUILD_ttk /DHAVE_SYS_TYPES_H=1 /DHAVE_SYS_STAT_H=1  /DHAVE_STRING_H=1 /DHAVE_MEMORY_H=1  /DHAVE_STRINGS_H=1 /Dinline=__inline /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE /DSTDC_HEADERS /DUSE_NMAKE=1 /DHAVE_STDINT_H=1 /DHAVE_INTTYPES_H=1 /DHAVE_STDBOOL_H=1 /DTCL_WITH_EXTERNAL_TOMMATH /DMP_64BIT /DNDEBUG /DTCL_CFG_OPTIMIZED /DTCL_CFG_DO64BIT /DUSE_TCL_STUBS /DUSE_TCLOO_STUBS  /DBUILD_tk -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ @C:\Users\RUNNER~1\AppData\Local\Temp\nmB4EE.tmp
+ttkBlink.c
+ttkButton.c
+ttkCache.c
+ttkClamTheme.c
+ttkClassicTheme.c
+ttkDefaultTheme.c
+ttkElements.c
+ttkEntry.c
+ttkFrame.c
+ttkImage.c
+ttkInit.c
+ttkLabel.c
+ttkLayout.c
+ttkManager.c
+ttkNodeCache.c
+ttkNotebook.c
+ttkPanedwindow.c
+ttkProgress.c
+ttkScale.c
+ttkScrollbar.c
+Compiling...
+ttkScroll.c
+ttkSeparator.c
+ttkSquare.c
+ttkState.c
+ttkTagSet.c
+ttkTheme.c
+ttkToggleswitch.c
+ttkTrace.c
+ttkTrack.c
+ttkTreeview.c
+ttkWidget.c
+ttkStubInit.c
+	link -nologo -machine:AMD64  -ltcg -release -opt:ref -opt:icf,3 -nodefaultlib:ucrt.lib -dll -out:D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tcl9tk91.dll kernel32.lib advapi32.lib netapi32.lib gdi32.lib user32.lib userenv.lib winspool.lib shell32.lib ole32.lib uuid.lib oleacc.lib usp10.lib dwmapi.lib msimg32.lib ucrt.lib "D:\a\tk\tk\tcl\win\Release_AMD64_VC1951\tclstub.lib" "D:\a\tk\tk\tcl\win\Release_AMD64_VC1951\tcl91.lib"  @C:\Users\RUNNER~1\AppData\Local\Temp\nmC461.tmp
+   Creating library D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tcl9tk91.lib and object D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tcl9tk91.exp
+Generating code
+Finished generating code
+	link -nologo -machine:AMD64  -ltcg -release -opt:ref -opt:icf,3 -nodefaultlib:ucrt.lib -subsystem:windows -out:D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\wish91.exe kernel32.lib advapi32.lib netapi32.lib gdi32.lib user32.lib userenv.lib winspool.lib shell32.lib ole32.lib uuid.lib oleacc.lib usp10.lib dwmapi.lib msimg32.lib ucrt.lib "D:\a\tk\tk\tcl\win\Release_AMD64_VC1951\tclstub.lib" "D:\a\tk\tk\tcl\win\Release_AMD64_VC1951\tcl91.lib"  -stack:2300000 D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\winMain.obj D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\wish.res D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tkstub.lib D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tcl9tk91.lib
+Generating code
+Finished generating code
+Building Tk library zip file
+D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tcl9tk91.dll
+D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\libtk9.1.1.zip
+        1 file(s) copied.
+	cl -nologo -c /std:c11  /DHAVE_CPUID=1 -W3 -wd4090 -wd4146 -wd4311 -wd4312 -FpD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\  -fp:strict -O2 -GS -GL -MD /D_CRT_NONSTDC_NO_DEPRECATE /DCONSOLE /DUNICODE /D_UNICODE -FoD:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\ D:\a\tk\tk\tcl\win\cat.c
+cat.c
+	link -nologo -machine:AMD64  -ltcg -release -opt:ref -opt:icf,3 -nodefaultlib:ucrt.lib -subsystem:console -out:"D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\cat32.exe" kernel32.lib advapi32.lib netapi32.lib gdi32.lib user32.lib userenv.lib winspool.lib shell32.lib ole32.lib uuid.lib oleacc.lib usp10.lib dwmapi.lib msimg32.lib ucrt.lib "D:\a\tk\tk\tcl\win\Release_AMD64_VC1951\tclstub.lib" "D:\a\tk\tk\tcl\win\Release_AMD64_VC1951\tcl91.lib"  -stack:16384 D:\a\tk\tk\dancing_bidi\win\Release_AMD64_VC1951\tk_Dynamic\cat.obj
+Generating code
+Finished generating code

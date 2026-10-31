@@ -1,0 +1,177 @@
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=0 rl=33
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=0 gL=6 gX=0 dx=2 wS=0 wE=25
+WINSHAPE out j=1 cs=6 cl=4 gF=0 gL=4 gX=0 dx=47 wS=0 wE=25
+WINSHAPE out j=2 cs=10 cl=7 gF=0 gL=7 gX=0 dx=81 wS=0 wE=25
+WINSHAPE out j=4 cs=22 cl=3 gF=0 gL=3 gX=0 dx=136 wS=0 wE=25
+WINSHAPE out j=3 cs=17 cl=5 gF=0 gL=5 gX=0 dx=169 wS=0 wE=25
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=0 rl=33
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=0 gL=6 gX=0 dx=2 wS=0 wE=25
+WINSHAPE out j=1 cs=6 cl=4 gF=0 gL=4 gX=0 dx=47 wS=0 wE=25
+WINSHAPE out j=2 cs=10 cl=7 gF=0 gL=7 gX=0 dx=81 wS=0 wE=25
+WINSHAPE out j=4 cs=22 cl=3 gF=0 gL=3 gX=0 dx=136 wS=0 wE=25
+WINSHAPE out j=3 cs=17 cl=5 gF=0 gL=5 gX=0 dx=169 wS=0 wE=25
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=0 rl=3
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=0 gL=3 gX=0 dx=2 wS=0 wE=3
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=3 rl=7
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=3 gL=6 gX=25 dx=27 wS=3 wE=8
+WINSHAPE out j=1 cs=6 cl=4 gF=2 gL=4 gX=20 dx=67 wS=3 wE=8
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=10 rl=23
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=1 cs=6 cl=4 gF=0 gL=2 gX=0 dx=47 wS=8 wE=25
+WINSHAPE out j=2 cs=10 cl=7 gF=0 gL=7 gX=0 dx=81 wS=8 wE=25
+WINSHAPE out j=4 cs=22 cl=3 gF=0 gL=3 gX=0 dx=136 wS=8 wE=25
+WINSHAPE out j=3 cs=17 cl=5 gF=0 gL=5 gX=0 dx=169 wS=8 wE=25
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=0 rl=6
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=0 gL=6 gX=0 dx=2 wS=0 wE=6
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=6 rl=6
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=1 cs=6 cl=4 gF=1 gL=4 gX=11 dx=58 wS=6 wE=9
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=12 rl=21
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=1 cs=6 cl=4 gF=0 gL=1 gX=0 dx=47 wS=9 wE=25
+WINSHAPE out j=2 cs=10 cl=7 gF=0 gL=7 gX=0 dx=81 wS=9 wE=25
+WINSHAPE out j=4 cs=22 cl=3 gF=0 gL=3 gX=0 dx=136 wS=9 wE=25
+WINSHAPE out j=3 cs=17 cl=5 gF=0 gL=5 gX=0 dx=169 wS=9 wE=25
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=0 rl=2
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=0 gL=2 gX=0 dx=2 wS=0 wE=2
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=2 rl=16
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=2 gL=6 gX=21 dx=23 wS=2 wE=14
+WINSHAPE out j=1 cs=6 cl=4 gF=0 gL=4 gX=0 dx=47 wS=2 wE=14
+WINSHAPE out j=2 cs=10 cl=7 gF=0 gL=4 gX=0 dx=81 wS=2 wE=14
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=18 rl=15
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=2 cs=10 cl=7 gF=4 gL=7 gX=35 dx=116 wS=14 wE=25
+WINSHAPE out j=4 cs=22 cl=3 gF=0 gL=3 gX=0 dx=136 wS=14 wE=25
+WINSHAPE out j=3 cs=17 cl=5 gF=0 gL=5 gX=0 dx=169 wS=14 wE=25
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=0 rl=4
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=0 gL=4 gX=0 dx=2 wS=0 wE=4
+WINSHAPE draw x=2 nruns=5 wlen=25 rs=4 rl=29
+WINSHAPE run 0 cs=0 cl=6 lvl=0 fRTL=0 x=2 w=45
+WINSHAPE run 1 cs=6 cl=4 lvl=1 fRTL=1 x=47 w=34
+WINSHAPE run 2 cs=10 cl=7 lvl=0 fRTL=0 x=81 w=55
+WINSHAPE run 3 cs=17 cl=5 lvl=1 fRTL=1 x=169 w=48
+WINSHAPE run 4 cs=22 cl=3 lvl=2 fRTL=0 x=136 w=33
+WINSHAPE out j=0 cs=0 cl=6 gF=4 gL=6 gX=29 dx=31 wS=4 wE=25
+WINSHAPE out j=1 cs=6 cl=4 gF=0 gL=4 gX=0 dx=47 wS=4 wE=25
+WINSHAPE out j=2 cs=10 cl=7 gF=0 gL=7 gX=0 dx=81 wS=4 wE=25
+WINSHAPE out j=4 cs=22 cl=3 gF=0 gL=3 gX=0 dx=136 wS=4 wE=25
+WINSHAPE out j=3 cs=17 cl=5 gF=0 gL=5 gX=0 dx=169 wS=4 wE=25
+PASS: line 1 (mixed LTR/RTL, single font): layout stable under sel splits
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=0 rl=9
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=5 gX=0 dx=82 wS=0 wE=5
+WINSHAPE draw x=41 nruns=1 wlen=3 rs=0 rl=3
+WINSHAPE run 0 cs=0 cl=3 lvl=0 fRTL=0 x=41 w=41
+WINSHAPE out j=0 cs=0 cl=3 gF=0 gL=3 gX=0 dx=41 wS=0 wE=3
+WINSHAPE draw x=2 nruns=1 wlen=5 rs=0 rl=9
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=2 w=39
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=5 gX=0 dx=2 wS=0 wE=5
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=0 rl=4
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=3 gL=5 gX=20 dx=102 wS=0 wE=2
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=4 rl=4
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=1 gL=3 gX=5 dx=87 wS=2 wE=4
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=8 rl=1
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=1 gX=0 dx=82 wS=4 wE=5
+WINSHAPE draw x=41 nruns=1 wlen=3 rs=0 rl=3
+WINSHAPE run 0 cs=0 cl=3 lvl=0 fRTL=0 x=41 w=41
+WINSHAPE out j=0 cs=0 cl=3 gF=0 gL=3 gX=0 dx=41 wS=0 wE=3
+WINSHAPE draw x=2 nruns=1 wlen=5 rs=0 rl=9
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=2 w=39
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=5 gX=0 dx=2 wS=0 wE=5
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=0 rl=9
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=5 gX=0 dx=82 wS=0 wE=5
+WINSHAPE draw x=41 nruns=1 wlen=3 rs=0 rl=3
+WINSHAPE run 0 cs=0 cl=3 lvl=0 fRTL=0 x=41 w=41
+WINSHAPE out j=0 cs=0 cl=3 gF=0 gL=3 gX=0 dx=41 wS=0 wE=3
+WINSHAPE draw x=2 nruns=1 wlen=5 rs=0 rl=9
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=2 w=39
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=5 gX=0 dx=2 wS=0 wE=5
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=0 rl=6
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=2 gL=5 gX=16 dx=98 wS=0 wE=3
+WINSHAPE draw x=82 nruns=1 wlen=5 rs=6 rl=3
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=82 w=42
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=2 gX=0 dx=82 wS=3 wE=5
+WINSHAPE draw x=41 nruns=1 wlen=3 rs=0 rl=1
+WINSHAPE run 0 cs=0 cl=3 lvl=0 fRTL=0 x=41 w=41
+WINSHAPE out j=0 cs=0 cl=3 gF=0 gL=1 gX=0 dx=41 wS=0 wE=1
+WINSHAPE draw x=41 nruns=1 wlen=3 rs=1 rl=2
+WINSHAPE run 0 cs=0 cl=3 lvl=0 fRTL=0 x=41 w=41
+WINSHAPE out j=0 cs=0 cl=3 gF=1 gL=3 gX=13 dx=54 wS=1 wE=3
+WINSHAPE draw x=2 nruns=1 wlen=5 rs=0 rl=9
+WINSHAPE run 0 cs=0 cl=5 lvl=1 fRTL=1 x=2 w=39
+WINSHAPE out j=0 cs=0 cl=5 gF=0 gL=5 gX=0 dx=2 wS=0 wE=5
+PASS: line 2 (bold LTR unit inside RTL paragraph): visual order correct, layout stable under sel splits
+WINSHAPE draw x=2 nruns=5 wlen=21 rs=0 rl=29
+WINSHAPE run 0 cs=0 cl=4 lvl=0 fRTL=0 x=2 w=36
+WINSHAPE run 1 cs=4 cl=4 lvl=1 fRTL=1 x=38 w=37
+WINSHAPE run 2 cs=8 cl=5 lvl=0 fRTL=0 x=75 w=38
+WINSHAPE run 3 cs=13 cl=4 lvl=1 fRTL=1 x=113 w=34
+WINSHAPE run 4 cs=17 cl=4 lvl=0 fRTL=0 x=147 w=30
+WINSHAPE out j=0 cs=0 cl=4 gF=0 gL=4 gX=0 dx=2 wS=0 wE=21
+WINSHAPE out j=1 cs=4 cl=4 gF=0 gL=4 gX=0 dx=38 wS=0 wE=21
+WINSHAPE out j=2 cs=8 cl=5 gF=0 gL=5 gX=0 dx=75 wS=0 wE=21
+WINSHAPE out j=3 cs=13 cl=4 gF=0 gL=4 gX=0 dx=113 wS=0 wE=21
+WINSHAPE out j=4 cs=17 cl=4 gF=0 gL=4 gX=0 dx=147 wS=0 wE=21
+PASS: bbox/index round-trip consistent on the mixed line
+RESULT: PASS

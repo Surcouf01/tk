@@ -1,0 +1,106 @@
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+nchars=21 dlineinfo: 746 0 214 24 19
+  bbox 1.0: 945 0 15 24 char=1513
+  bbox 1.1: 935 0 10 24 char=1500
+  bbox 1.2: 929 0 6 24 char=1493
+  bbox 1.3: 916 0 13 24 char=1501
+  bbox 1.4: 910 0 6 24 char=32
+  bbox 1.5: 899 0 11 24 char=1506
+  bbox 1.6: 893 0 6 24 char=1493
+  bbox 1.7: 883 0 10 24 char=1500
+  bbox 1.8: 870 0 13 24 char=1501
+  bbox 1.9: 864 0 6 24 char=32
+  bbox 1.10: 852 0 12 24 char=1496
+  bbox 1.11: 840 0 12 24 char=1511
+  bbox 1.12: 828 0 12 24 char=1505
+  bbox 1.13: 816 0 12 24 char=1496
+  bbox 1.14: 810 0 6 24 char=32
+  bbox 1.15: 799 0 11 24 char=1489
+  bbox 1.16: 788 0 11 24 char=1506
+  bbox 1.17: 777 0 11 24 char=1489
+  bbox 1.18: 766 0 11 24 char=1512
+  bbox 1.19: 760 0 6 24 char=1497
+  bbox 1.20: 746 0 14 24 char=1514
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+caret at 1.0: x=960 rightEdge=960 inset=0
+PASS: A caret at 1.0 drawn at the right margin of the RTL paragraph
+click at @950,12 -> 1.0
+PASS: B clicking at the right margin places the caret at 1.0
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+WINSHAPE draw x=746 nruns=1 wlen=21 rs=0 rl=39
+WINSHAPE run 0 cs=0 cl=21 lvl=1 fRTL=1 x=746 w=214
+WINSHAPE out j=0 cs=0 cl=21 gF=0 gL=21 gX=0 dx=746 wS=0 wE=21
+caret at 1.end: x=746 leftEdge=746
+PASS: C caret at 1.end drawn at the left margin
+--- tkBidiLog (last layout) ---
+  BD2 reorder nch=3
+  BD2 unit 0 f=0 l=2 dir=2 rs=2 newx=746 w=214 org=746 uw=214 pl=1
+  BD2 chunk 0 x=746 w=214 nb=39 rtl=1
+  BD2 chunk 1 x=746 w=0 nb=0 rtl=-1
+  BD2 chunk 2 x=746 w=0 nb=1 rtl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 caret x=746
+  BD2 reorder nch=3
+  BD2 unit 0 f=0 l=2 dir=2 rs=2 newx=746 w=214 org=746 uw=214 pl=1
+  BD2 chunk 0 x=746 w=214 nb=39 rtl=1
+  BD2 chunk 1 x=746 w=0 nb=0 rtl=-1
+  BD2 chunk 2 x=746 w=0 nb=1 rtl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 caret x=746
+  BD2 caret x=746
+  BD2 reorder nch=3
+  BD2 unit 0 f=0 l=2 dir=2 rs=2 newx=746 w=214 org=746 uw=214 pl=1
+  BD2 chunk 0 x=746 w=214 nb=39 rtl=1
+  BD2 chunk 1 x=746 w=0 nb=0 rtl=-1
+  BD2 chunk 2 x=746 w=0 nb=1 rtl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 caret x=746
+  BD2 reorder nch=3
+  BD2 unit 0 f=0 l=2 dir=2 rs=2 newx=746 w=214 org=746 uw=214 pl=1
+  BD2 chunk 0 x=746 w=214 nb=39 rtl=1
+  BD2 chunk 1 x=746 w=0 nb=0 rtl=-1
+  BD2 chunk 2 x=746 w=0 nb=1 rtl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 click-rtl x=959 chunkx=746 w=214 nb=39 m=0 org=746 uw=214 pl=1
+  BD2 caret x=746
+  BD2 caret x=746
+RESULT: PASS

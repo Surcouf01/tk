@@ -1,0 +1,121 @@
+--- td-dancing.c	2026-10-30 03:56:07.505163729 +0000
++++ td-dbg.c	2026-10-30 04:03:31.222039909 +0000
+@@ -25,6 +25,22 @@
+ #include "tkUnixInt.h"
+ #endif
+ 
++/* ---- TK_DEBUG_MEASURE diagnostic probes ---- */
++#include <stdlib.h>
++static int DbgMOn = -1;
++static void DbgM(const char *tag, long a, long b, long c, long d, long e,
++        long f, long g)
++{
++    if (DbgMOn < 0) {
++        DbgMOn = (getenv("TK_DEBUG_MEASURE") != NULL);
++    }
++    if (!DbgMOn) {
++        return;
++    }
++    fprintf(stderr, "%s %ld %ld %ld %ld %ld %ld %ld\n", tag, a, b, c, d, e, f, g);
++}
++/* ---- end probes ---- */
++
+ /*
+  * "Calculations of line pixel heights and the size of the vertical
+  * scrollbar."
+@@ -9541,10 +9557,17 @@
+ 	    MeasureChars(tkfont, chars, charsLen, 0, bstart,
+ 			 0, -1, 0, &widthUntilStart);
+ 	    xDisplacement = startX - widthUntilStart - BaseOriginX(ciPtr);
++	DbgM("CCM-wus", widthUntilStart, xDisplacement, startX, bstart,
++		BaseOriginX(ciPtr), chunkPtr->x, chunkPtr->width);
+ 	}
+ 
+ 	fit = MeasureChars(tkfont, chars, charsLen, 0, bend,
+ 			   BaseOriginX(ciPtr) + xDisplacement, maxX, flags, nextXPtr);
++	{
++	BaseCharInfo *bciTmp0 = (BaseCharInfo *)ciPtr->baseChunkPtr->clientData;
++	DbgM("CCM-fit", bstart, bend, *nextXPtr, ciPtr->baseOffset,
++		ciPtr->numBytes, chunkPtr->x, (bciTmp0 != NULL && bciTmp0->placed));
++	}
+ 
+ 	/*
+ 	 * The Windows backend (Uniscribe) can return a non-monotonic
+@@ -9589,6 +9612,11 @@
+ 		bciTmp->maxPrefixWidth = *nextXPtr;
+ 	    }
+ 	}
++    {
++        BaseCharInfo *bciTmp1 = (BaseCharInfo *)ciPtr->baseChunkPtr->clientData;
++        DbgM("CCM-clamp", *nextXPtr, bciTmp1->maxPrefixWidth, startX,
++                ciPtr->isRtl, ciPtr->baseOffset, bstart, bend);
++    }
+ 
+ 	if (fit < bstart) {
+ 	    return 0;
+@@ -9678,10 +9706,17 @@
+ 	    MeasureChars(tkfont, chars, charsLen, 0, bstart,
+ 			 0, -1, 0, &widthUntilStart);
+ 	    xDisplacement = startX - widthUntilStart - BaseOriginX(ciPtr);
++	DbgM("CCM-wus", widthUntilStart, xDisplacement, startX, bstart,
++		BaseOriginX(ciPtr), chunkPtr->x, chunkPtr->width);
+ 	}
+ 
+ 	fit = MeasureChars(tkfont, chars, charsLen, 0, bend,
+ 			   BaseOriginX(ciPtr) + xDisplacement, maxX, flags, nextXPtr);
++	{
++	BaseCharInfo *bciTmp0 = (BaseCharInfo *)ciPtr->baseChunkPtr->clientData;
++	DbgM("CCM-fit", bstart, bend, *nextXPtr, ciPtr->baseOffset,
++		ciPtr->numBytes, chunkPtr->x, (bciTmp0 != NULL && bciTmp0->placed));
++	}
+ 
+ 	/*
+ 	 * The Windows backend (Uniscribe) can return a non-monotonic
+@@ -9726,6 +9761,11 @@
+ 		bciTmp->maxPrefixWidth = *nextXPtr;
+ 	    }
+ 	}
++    {
++        BaseCharInfo *bciTmp1 = (BaseCharInfo *)ciPtr->baseChunkPtr->clientData;
++        DbgM("CCM-clamp", *nextXPtr, bciTmp1->maxPrefixWidth, startX,
++                ciPtr->isRtl, ciPtr->baseOffset, bstart, bend);
++    }
+ 
+ 	if (fit < bstart) {
+ 	    return 0;
+@@ -10189,12 +10229,17 @@
+ 	    CharChunkMeasureChars(chunkPtr, NULL, 0, byteIndex, nextIndex,
+ 		    *xPtr, -1, 0, &x2);
+ 	    *widthPtr = (x2 > maxX) ? maxX - *xPtr : x2 - *xPtr;
++	DbgM("CBP-ltr", byteIndex, nextIndex, *xPtr, x2, maxX, *widthPtr,
++		chunkPtr->x + chunkPtr->width);
+ 	}
+     }
+ 
++    DbgM("CBP", byteIndex, nextIndex, *xPtr, *widthPtr, ciPtr->isRtl,
++            chunkPtr->x, chunkPtr->width);
++
+     /* Zero-width fallback (common with elision / bidi). */
+     if (*widthPtr == 0 && ciPtr->numBytes > 0) {
+-	*widthPtr = 1;  /* minimal visible width for cursor/selection */
++    *widthPtr = 1;  /* minimal visible width for cursor/selection */
+     }
+ }
+ 
+@@ -10623,6 +10668,7 @@
+     ch = 0;
+     curX = startX;
+     start = source + rangeStart;
++    DbgM("MC-in", rangeStart, rangeLength, startX, maxX, maxBytes, 0, 0);
+     end = start + rangeLength;
+     special = start;
+     while (start < end) {
+@@ -10672,6 +10718,8 @@
+ 	}
+     }
+ 
++    DbgM("MC-out", start - (source+rangeStart), curX, rangeStart,
++            rangeLength, startX, maxX, 0);
+     *nextXPtr = curX;
+     return start - (source+rangeStart);
+ }
