@@ -60,7 +60,7 @@ jobs:
           ls dancing_bidi | head -20 | tee /tmp/fetch.log
           cat dancing_bidi/manifest.uuid >> /tmp/fetch.log 2>/dev/null || true
 
-      - name: Apply diagnostic/fix patches (tolerant: already-merged hunks skip)
+      - name: "Apply diagnostic/fix patches (tolerant: already-merged hunks skip)"
         run: |
           cd dancing_bidi
           for p in dancing-diag dancing-mixed-fix; do
