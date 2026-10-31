@@ -66,9 +66,9 @@ jobs:
           Set-Location dancing_bidi\win
           nmake -f makefile.vc clean
           if ($lastexitcode -ne 0) { throw "nmake clean tk failed" }
-          nmake -f makefile.vc all TCLDIR="$env:GITHUB_WORKSPACE\tcl\win" INSTALLDIR="$env:GITHUB_WORKSPACE\install" CHECKING=0 2>&1 | Tee-Object -FilePath "$env:GITHUB_WORKSPACE\win-tkbuild.log" | Select-Object -Last 25
+          nmake -f makefile.vc all TCLDIR="$env:GITHUB_WORKSPACE\tcl" INSTALLDIR="$env:GITHUB_WORKSPACE\install" CHECKING=0 2>&1 | Tee-Object -FilePath "$env:GITHUB_WORKSPACE\win-tkbuild.log" | Select-Object -Last 25
           if ($lastexitcode -ne 0) { throw "nmake tk failed" }
-          nmake -f makefile.vc install TCLDIR="$env:GITHUB_WORKSPACE\tcl\win" INSTALLDIR="$env:GITHUB_WORKSPACE\install"
+          nmake -f makefile.vc install TCLDIR="$env:GITHUB_WORKSPACE\tcl" INSTALLDIR="$env:GITHUB_WORKSPACE\install"
           if ($lastexitcode -ne 0) { throw "nmake tk install failed" }
 
       - name: "Test W1 mixed sel mirror (Kevin bug 2)"
