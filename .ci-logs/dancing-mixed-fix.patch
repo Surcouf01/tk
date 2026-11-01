@@ -1,0 +1,63 @@
+--- td-dancing.c	2026-10-30 03:56:07.505163729 +0000
++++ td-fix.c	2026-10-30 04:06:29.545989998 +0000
+@@ -490,6 +490,24 @@
+ static Tcl_ThreadDataKey dataKey;
+ 
+ /*
++ * True while LayoutDLine() lays out a display line.  The monotonic
++ * prefix clamp of CharChunkMeasureChars() must only apply to the layout
++ * measurements: it exists to guard against non-monotonic positions
++ * returned by the platform backends while the chunks of a base chunk
++ * are laid out one after the other (e.g. Uniscribe can go 975 -> 885 for
++ * a measured range ending with a control character such as '\n').
++ * Measurements performed after the layout (bboxes, hit testing) are
++ * anchored by startX; clamping them against the stale layout-time bound
++ * maxPrefixWidth computes the width of a single character on a
++ * mixed-direction line from the right end of the line: [bbox] then
++ * reports "right edge of the display line minus x" for every character,
++ * so the bbox centers are wrong and the caret / TextClosestGap are
++ * misplaced (residual mixed-bidi issue of the dancing selection).
++ */
++
++static int inLayout = 0;
++
++/*
+  * BaseOriginX --
+  *
+  *	Returns the x coordinate from which the whole string of the base chunk
+@@ -1756,6 +1774,9 @@
+ 	    Tcl_GetThreadData(&dataKey, sizeof(ThreadSpecificData));
+ #endif
+     DLine *dlPtr;	/* New display line. */
++    int savedInLayout = inLayout;
++
++    inLayout = 1;
+     TkTextSegment *segPtr;	/* Current segment in text. */
+     TkTextDispChunk *lastChunkPtr;
+ 				/* Last chunk allocated so far for line. */
+@@ -2381,6 +2402,7 @@
+ 
+     BidiReorderChunks(dlPtr);
+ 
++    inLayout = savedInLayout;
+     return dlPtr;
+ }
+ 
+@@ -9561,7 +9583,7 @@
+ 	 * left edge of the whole string, so the two are not comparable.
+ 	 */
+ 
+-	if (!(ciPtr->isRtl
++	if (inLayout && !(ciPtr->isRtl
+ 		&& ((BaseCharInfo *)ciPtr->baseChunkPtr->clientData)->placed)) {
+ 	    BaseCharInfo *bciTmp = (BaseCharInfo *)ciPtr->baseChunkPtr->clientData;
+ 	    if (bstart != ciPtr->baseOffset) {
+@@ -9698,7 +9720,7 @@
+ 	 * left edge of the whole string, so the two are not comparable.
+ 	 */
+ 
+-	if (!(ciPtr->isRtl
++	if (inLayout && !(ciPtr->isRtl
+ 		&& ((BaseCharInfo *)ciPtr->baseChunkPtr->clientData)->placed)) {
+ 	    BaseCharInfo *bciTmp = (BaseCharInfo *)ciPtr->baseChunkPtr->clientData;
+ 	    if (bstart != ciPtr->baseOffset) {

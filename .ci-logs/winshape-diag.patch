@@ -1,0 +1,33 @@
+--- a/win/tkWinFont.c
++++ b/win/tkWinFont.c
+@@ -2173,6 +2173,17 @@
+ 	penX += TkWinShapedRunsWidth(&runs[j], 1);
+     }
+ 
++    if (getenv("TK_DEBUG_WINSHAPE") != NULL) {
++	fprintf(stderr, "WINSHAPE draw x=%d nruns=%d wlen=%d rs=%d rl=%d\n",
++		x, nRuns, wlen, (int)rangeStart, (int)rangeLength);
++	for (int j = 0; j < nRuns; j++) {
++	    fprintf(stderr, "WINSHAPE run %d cs=%d cl=%d lvl=%d fRTL=%d x=%d w=%d\n",
++		    j, runs[j].charStart, runs[j].charLen,
++		    runs[j].sa.s.uBidiLevel, runs[j].sa.fRTL,
++		    runX[j], TkWinShapedRunsWidth(&runs[j], 1));
++	}
++    }
++
+     /* Draw only runs that intersect the requested character range. */
+     for (int vi = 0; vi < nRuns; vi++) {
+ 	int j = visualOrder[vi];  /* visual -> logical mapping. */
+@@ -2239,6 +2250,12 @@
+ 	    }
+ 	}
+ 
++	if (getenv("TK_DEBUG_WINSHAPE") != NULL) {
++	    fprintf(stderr, "WINSHAPE out j=%d cs=%d cl=%d gF=%d gL=%d gX=%d dx=%d wS=%d wE=%d\n",
++		    j, run->charStart, run->charLen, gFirst, gLast, glyphOffsetX,
++		    runX[j] + glyphOffsetX, wRangeStart, wRangeEnd);
++	}
++
+ 	SelectObject(dc, run->hFont);
+ 
+ 	/* Color emoji layers first; GDI only draws the outlines. */

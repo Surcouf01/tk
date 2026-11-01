@@ -1,0 +1,33 @@
+--- a/generic/tkTextDisp.c
++++ b/generic/tkTextDisp.c
+@@ -1607,6 +1607,30 @@
+ 	if (textPtr != NULL && textPtr->interp != NULL) {
+ 	    LOG("tkBidiLog", "BD2 reorder anyRtl=0");
+ 	}
++	/*
++	 * Even in a line without any RTL string, the per-chunk isRtl flags
++	 * set at layout time (ChunkIsRtl of the chunk text) must be cleared
++	 * here: a chunk may start with strong RTL text even though the
++	 * paragraph is LTR, e.g. when the "sel" tag splits
++	 * "hello <hebrew> world" right before the Hebrew run, the unselected
++	 * tail chunk starts with the rest of the Hebrew word.  Leaving its
++	 * isRtl flag set makes CharBboxProc/CharMeasureProc mirror that
++	 * chunk's geometry, while the font backends, which resolve the whole
++	 * base string in context, draw the glyphs at their correct positions:
++	 * bounding boxes, selection rectangles and hit tests are then
++	 * reversed relative to the drawn text, which is the "shimmering,
++	 * mirrored sel" seen when selecting mixed bidi text.  In an LTR
++	 * paragraph every chunk keeps its logical (left-to-right) placement,
++	 * so no chunk must be mirrored.
++	 */
++
++	for (i = 0; i < nChunks; i++) {
++	    CharInfo *ciPtr = (CharInfo *)chunks[i]->clientData;
++
++	    if (chunks[i]->displayProc == CharDisplayProc && ciPtr != NULL) {
++		ciPtr->isRtl = 0;
++	    }
++	}
+ 	Tcl_Free(chunks);
+ 	Tcl_Free(units);
+ 	Tcl_Free(order);
