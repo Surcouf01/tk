@@ -121,6 +121,17 @@ jobs:
           Get-Content win-stability.log | Out-String | ForEach-Object { if ($_ -notmatch "RESULT|PASS|FAIL|SKIP") { throw "test W3 produced no result lines" } }
           exit 0
 
+      - name: "Test W4 bidi demo click at right margin (Kevin bug 1 repro)"
+        shell: pwsh
+        working-directory: ${{ github.workspace }}
+        run: |
+          $wish = (Get-ChildItem "$env:GITHUB_WORKSPACE\install\bin" -Filter "wish*.exe" | Select-Object -First 1).FullName
+          $env:PATH = "$env:GITHUB_WORKSPACE\install\bin;$env:PATH"
+          cmd /c "set TK_DEBUG_WINSHAPE=1&& `"$wish`" `"$env:GITHUB_WORKSPACE\repo\.github\test-scripts\bididemo-click.tcl`" > win-demo-click.log 2>&1"
+          Get-Content win-demo-click.log
+          Get-Content win-demo-click.log | Out-String | ForEach-Object { if ($_ -notmatch "RESULT") { throw "test W4 produced no RESULT line" } }
+          exit 0
+
       - name: "Publish results"
         if: always()
         shell: bash

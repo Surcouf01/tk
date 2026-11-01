@@ -119,6 +119,14 @@ jobs:
           xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
             $GITHUB_WORKSPACE/repo/.github/test-scripts/caret-rtl-margin.tcl 2>&1 | tee /tmp/test5.log
 
+      - name: "Test 6: bidi demo click at right margin of Hebrew paragraph (Kevin bug 1 repro)"
+        run: |
+          cd dancing_bidi/unix
+          export TK_LIBRARY=$GITHUB_WORKSPACE/dancing_bidi/library
+          export LD_LIBRARY_PATH=$GITHUB_WORKSPACE/inst/lib:$GITHUB_WORKSPACE/dancing_bidi/unix
+          xvfb-run -a -s "-screen 0 1280x1024x24" ./wish \
+            $GITHUB_WORKSPACE/repo/.github/test-scripts/bididemo-click.tcl 2>&1 | tee /tmp/test6.log
+
       - name: "text.test suite (informational)"
         continue-on-error: true
         run: |
@@ -134,7 +142,7 @@ jobs:
           git config user.name ci-bot
           git config user.email ci-bot@users.noreply.github.com
           mkdir -p .ci-logs
-          cp /tmp/diag.log /tmp/fetch.log /tmp/test1.log /tmp/test2.log /tmp/test3.log /tmp/test4.log /tmp/test5.log /tmp/texttest.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
+          cp /tmp/diag.log /tmp/fetch.log /tmp/test1.log /tmp/test2.log /tmp/test3.log /tmp/test4.log /tmp/test5.log /tmp/test6.log /tmp/texttest.log /tmp/tkbuild.log .ci-logs/ 2>/dev/null || true
           cp .github/test-scripts/*.tcl .ci-logs/ 2>/dev/null || true
           git add .ci-logs
           git commit -qm "CI logs dancing_bidi ${{ github.sha }}"
