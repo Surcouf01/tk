@@ -1,0 +1,4 @@
+PASS: line 1 (mixed LTR/RTL, single font): layout stable under sel splits
+PASS: line 2 (bold LTR unit inside RTL paragraph): visual order correct, layout stable under sel splits
+PASS: bbox/index round-trip consistent on the mixed line
+RESULT: PASS

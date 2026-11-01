@@ -1,0 +1,11 @@
+HEBREW first char index: 5.0 (found via 5.0)
+DLSTART 5.0 dline=0 68 617 17 13 rightX=617 firstcharbbox=612 68 5 17
+CARET at 5.0 caretX= rightX=617 firstcharRight=617
+NOTE: no BD2 caret log for 5.0 (line not redrawn?)
+DLSTART 5.88 dline=0 85 629 17 13 rightX=629 firstcharbbox=619 85 10 17
+CARET at 5.88 caretX= rightX=629 firstcharRight=629
+NOTE: no BD2 caret log for 5.88 (line not redrawn?)
+DLSTART 5.182 dline=0 102 623 17 13 rightX=623 firstcharbbox=613 102 10 17
+CARET at 5.182 caretX= rightX=623 firstcharRight=623
+NOTE: no BD2 caret log for 5.182 (line not redrawn?)
+RESULT: PASS
